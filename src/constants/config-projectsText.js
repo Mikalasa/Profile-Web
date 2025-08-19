@@ -2,7 +2,7 @@ export const projects = [
     {
         title: "Todo List",
         imageURL: "/projectImage/todolist.png",
-        url: 'http://www.to-do-list.wuaze.com/',
+        url: 'https://to-do-list.wuaze.com',
         repo: 'https://github.com/Mikalasa/todo-list',
         type: ["Full-Stack", "Web App"],
         point: [

@@ -1,0 +1,100 @@
+.gradient-title-text {
+    text-transform: capitalize;
+    font-size: 5rem;
+    font-weight: 900;
+    background: linear-gradient(90deg,
+    #d4d4d4, #a9a9a9, #808080, #666666, #a9a9a9, #d4d4d4);
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 50%;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+
+.the-highLight-words-1 {
+    font-weight: 900;
+    background: linear-gradient(45deg,
+    #4FAAF7,
+    #68E8E6,
+    #FFD700,
+    #FF8C00,
+    #FF5E57
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient-flow 6s infinite linear;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradient-flow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.the-highLight-words-2 {
+    font-weight: 900;
+    background: linear-gradient(45deg,
+    #8A2BE2, /* 紫色 */
+    #4B0082, /* 靛蓝 */
+    #00BFFF, /* 深天蓝 */
+    #20B2AA, /* 青绿色 */
+    #32CD32  /* 酸橙绿 */
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 300% 300%;
+    animation: gradient-flow-2 6s infinite linear;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradient-flow-2 {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.the-highlight-text-box {
+    text-align: center;
+    color: #d4d4d4;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.the-highlight-text-box::after {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 2px;
+    background-color: #ffffff;
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+.App {
+    position: relative;
+    width: 100%;
+}
+body {
+    background: #121212;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.custom-drop-down-menu {
+    background: -webkit-linear-gradient(to top, #050505, #000000);
+    background: linear-gradient(to top, #000000, #000000);
+}
+
+.custom-navbar-bg {
+    background: -webkit-linear-gradient(180deg, #050505, #000000);
+}
+
+
+/*
+*** scroll bar ***
+*/
+
+/* The whole scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+/* Scrollbar track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Track color */
+}
+
+/* Scrollbar handle */
+::-webkit-scrollbar-thumb {
+    background: #888; /* Handle color */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Handle color on hover */
+}
+
+/* The whole scrollbar */
+* {
+    scrollbar-width: thin; /* Can be 'thin' or 'auto' */
+    scrollbar-color: #a2a2a2 #505050; /* Handle color Track color */
+}
+
+
+.the-paragraph {
+    padding: 0.5rem;
+    line-height: 1.8;
+    font-family: 'Inter', sans-serif;
+}
+
+.the-paragraph-card {
+    padding: 0.5rem;
+    border-radius: 12px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.07), rgba(45, 45, 45, 0.85));
+    box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.4),
+            0 4px 12px rgba(255, 255, 255, 0.05);
+    text-align: justify;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.the-paragraph-center {
+    text-align: center;
+}

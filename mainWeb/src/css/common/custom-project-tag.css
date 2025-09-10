@@ -1,0 +1,82 @@
+.tech-stack-tag {
+    color: #fafafa;
+    border-radius: 0.5rem;
+    display: inline-block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 22px;
+}
+.JavaScript-tag {
+    background-color: rgba(247, 223, 30, 0.6); /* #f7df1e with 60% opacity */
+}
+.HTML-tag {
+    background-color: rgba(227, 79, 38, 0.6); /* #e34f26 with 60% opacity */
+}
+
+.CSS-tag {
+    background-color: rgba(21, 114, 182, 0.6); /* #1572B6 with 60% opacity */
+}
+
+.React-tag {
+    background-color: rgba(97, 218, 251, 0.6); /* #61DAFB with 60% opacity */
+}
+
+.Vue-tag {
+    background-color: rgba(79, 192, 141, 0.6); /* #4FC08D with 60% opacity */
+}
+
+.Angular-tag {
+    background-color: rgba(221, 0, 49, 0.6); /* #DD0031 with 60% opacity */
+}
+
+.Svelte-tag {
+    background-color: rgba(255, 62, 0, 0.6); /* #ff3e00 with 60% opacity */
+}
+
+.Bootstrap-tag {
+    background-color: rgba(121, 82, 179, 0.6); /* #7952b3 with 60% opacity */
+}
+
+.TailwindCSS-tag {
+    background-color: rgba(6, 182, 212, 0.6); /* #06B6D4 with 60% opacity */
+}
+
+.MUI-tag {
+    background-color: rgba(0, 127, 255, 0.6); /* #007FFF with 60% opacity */
+}
+
+.PHP-tag {
+    background-color: rgba(119, 123, 180, 0.6); /* #777BB4 with 60% opacity */
+}
+
+.MySQL-tag {
+    background-color: rgba(68, 121, 161, 0.6); /* #4479A1 with 60% opacity */
+}
+
+.Python-tag {
+    background-color: rgba(55, 118, 171, 0.6); /* #3776AB with 60% opacity */
+}
+
+.NodeJS-tag {
+    background-color: rgba(51, 153, 51, 0.6); /* #339933 with 60% opacity */
+}
+
+.ExpressJS-tag {
+    background-color: rgba(51, 153, 51, 0.6); /* #339933 with 60% opacity */
+}
+
+.AWS-tag {
+    background-color: rgba(255, 153, 0, 0.6); /* #FF9900 with 60% opacity */
+}
+
+.RESTAPI-tag {
+    background-color: rgba(95, 95, 95, 0.6); /* #5F5F5F with 60% opacity */
+}
+
+.Sass-tag {
+    background-color: rgba(255, 127, 80, 0.6); /* #FF7F50 with 60% opacity */
+}
+.Vercel-tag {
+    background-color: rgba(62, 62, 62, 0.6); /* Vercel's black color with 60% opacity */
+}

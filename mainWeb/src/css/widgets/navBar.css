@@ -1,0 +1,26 @@
+.navbar-item {
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-item:hover {
+    color: #FFD700;
+}
+
+.navbar-item::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #4FAAF7;
+    transition: width 0.3s ease;
+}
+
+.navbar-item:hover::after {
+    width: 100%;
+}
+
+

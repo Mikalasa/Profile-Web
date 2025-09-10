@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS */
+@import "css/common/general.css";
+@import "css/common/container.css";
+@import "css/widgets/canvas-loader.css";
+@import "css/widgets/project-card.css";
+@import "css/common/custom-project-tag.css";
+@import "css/widgets/iframe-canvas.css";
+/*@import "test/test.css";*/
+@import "css/widgets/hero-card.css";
+@import "css/common/custom-effects.css";
+@import "css/widgets/skill-cards-loop.css";
+@import "css/widgets/mySocial.css";
+@import "css/widgets/navBar.css";
+@import "css/widgets/the-808-page.css";

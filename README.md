@@ -1,9 +1,9 @@
 # 3D Profile Web
 
-![Todo Screenshot](public/screenshot.png)
+![Todo Screenshot](/screenshot.png)
 
 ### _**It has been deployed on GitHub Pages.**_
-### _**[Click here to see the web](https://mikalasa.github.io/ProfileWeb/)**_
+### _**[Click here to see the web](https://mikalasa.github.io/Profile-Web/mainWeb/)**_
 
 ## Introduction
 This web app was developed using React, React-three-fiber, Tailwind CSS, and Framer Motion.

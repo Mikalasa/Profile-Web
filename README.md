@@ -3,7 +3,7 @@
 ![Todo Screenshot](public/screenshot.png)
 
 ### _**It has been deployed on GitHub Pages.**_
-### _**[Click to view the web](https://mikalasa.github.io/Profile-Web/mainWeb/)**_
+### _**[Click here to see the web](https://mikalasa.github.io/ProfileWeb/)**_
 
 ## Introduction
 This web app was developed using React, React-three-fiber, Tailwind CSS, and Framer Motion.

@@ -1,6 +1,6 @@
 # 3D Profile Web
 
-![Todo Screenshot](public/screenshot.png)
+![Todo Screenshot](/screenshot.png)
 
 ### _**It has been deployed on GitHub Pages.**_
 ### _**[Click to view the web](https://mikalasa.github.io/Profile-Web/mainWeb/)**_

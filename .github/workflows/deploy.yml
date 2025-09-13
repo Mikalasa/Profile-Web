@@ -1,0 +1,80 @@
+name: Deploy mainWeb & IframeWeb to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 16 (match previous setup)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '16'
+
+      # ===== Build mainWeb =====
+      - name: Install deps (mainWeb)
+        working-directory: mainWeb
+        run: npm install
+
+      - name: Build mainWeb (CRA treats warnings as errors in CI, so disable)
+        working-directory: mainWeb
+        run: CI=false npm run build
+
+      # ===== Build IframeWeb =====
+      - name: Install deps (IframeWeb)
+        working-directory: IframeWeb
+        run: npm install
+
+      - name: Build IframeWeb (CRA treats warnings as errors in CI, so disable)
+        working-directory: IframeWeb
+        run: CI=false npm run build
+
+      # ===== Collect artifacts into gh-pages layout =====
+      - name: Prepare dist with subfolders and SPA fallbacks
+        shell: bash
+        run: |
+          set -e
+          mkdir -p dist/mainWeb dist/IframeWeb
+
+          # 拷贝构建产物到各自子目录；使用 “/.” 以包含隐藏文件（如 .map/.asset 等）
+          if [ -d mainWeb/build ]; then
+            cp -R mainWeb/build/. dist/mainWeb/
+          elif [ -d mainWeb/dist ]; then
+            cp -R mainWeb/dist/. dist/mainWeb/
+          else
+            echo "mainWeb: no build output found" && exit 1
+          fi
+
+          if [ -d IframeWeb/build ]; then
+            cp -R IframeWeb/build/. dist/IframeWeb/
+          elif [ -d IframeWeb/dist ]; then
+            cp -R IframeWeb/dist/. dist/IframeWeb/
+          else
+            echo "IframeWeb: no build output found" && exit 1
+          fi
+
+          # SPA 刷新/深链接的 404 处理
+          [ -f dist/mainWeb/index.html ] && cp dist/mainWeb/index.html dist/mainWeb/404.html
+          [ -f dist/IframeWeb/index.html ] && cp dist/IframeWeb/index.html dist/IframeWeb/404.html
+
+          # 关闭 Jekyll，避免下划线资源被忽略
+          touch dist/.nojekyll
+
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: dist
+          force_orphan: true

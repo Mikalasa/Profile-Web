@@ -60,7 +60,7 @@ const MacModel = React.memo(() => {
                         className={`webgl-iframe webgl-iframe-${os}`}
                         sandbox="allow-scripts allow-same-origin"
                         loading="lazy"
-                        src="https://mikalasa.github.io/ProfileWeb-Iframe-About/"
+                        src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
                     />
                 </Html>
             </group>

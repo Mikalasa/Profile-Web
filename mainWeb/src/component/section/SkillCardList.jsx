@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { skills } from '../../constants/config-skills';
-import {motion, useInView} from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 // SkillCard 组件
 const SkillCard = ({ skill }) => (
@@ -18,90 +18,72 @@ const SkillCard = ({ skill }) => (
 const InfiniteScrollRow = ({ skills, speed }) => {
     const containerRef = useRef(null);
     const contentRef = useRef(null);
-    const positionRef = useRef(0);
-    const [repeatCount, setRepeatCount] = useState(1);
-    const rowWidthPerCycle = useRef(0);
-    const repeatedSkills = React.useMemo(() => {
-        return Array.from({ length: repeatCount }).flatMap(() => skills);
-    }, [repeatCount, skills]);
+    const reduced = useReducedMotion();
+    const [cycleWidth, setCycleWidth] = useState(0);
+    const [repeatCount, setRepeatCount] = useState(2);
+    const repeatedSkills = React.useMemo(
+        () => Array.from({ length: repeatCount }).flatMap(() => skills),
+        [skills, repeatCount]
+    );
 
 
-    useEffect(() => {
-        if (contentRef.current) {
-            rowWidthPerCycle.current = contentRef.current.scrollWidth / repeatCount;
-        }
-    }, [repeatCount, skills]);
-
-
-    // 动态计算需要的重复次数
-    const calculateRepeatCount = () => {
-        if (containerRef.current && contentRef.current) {
-            const containerWidth = containerRef.current.offsetWidth;
-            const cardWidthWithMargin = contentRef.current.children[0].offsetWidth + 16; // 单个方块宽度 + margin-right (16px)
-            const count = Math.ceil(containerWidth / (cardWidthWithMargin * skills.length)) + 2;
-            setRepeatCount(count);
-        }
-    };
-
-    useEffect(() => {
-        calculateRepeatCount();
-        window.addEventListener('resize', calculateRepeatCount);
-        return () => {
-            window.removeEventListener('resize', calculateRepeatCount);
-        };
-    }, [skills]);
-
+    // Measure the width of a single cycle (one set of skills)
     useEffect(() => {
         if (!contentRef.current) return;
+        queueMicrotask(() => {
+            if (!contentRef.current) return;
+            const full = contentRef.current.scrollWidth;
+            const single = repeatCount > 0 ? full / repeatCount : full;
+            setCycleWidth(single);
+        });
+    }, [skills, repeatCount]);
 
-        const totalRowWidth = contentRef.current.scrollWidth;
+    // Keep measurements in sync and ensure we have enough repeats to cover the width
+    useEffect(() => {
+        if (!containerRef.current || !contentRef.current) return;
 
-        let animationFrameId;
-
-        const scroll = () => {
-            positionRef.current -= speed;
-
-            let current = positionRef.current;
-
-            if (speed > 0 && Math.abs(current) >= totalRowWidth / repeatCount) {
-                current = 0;
+        const measure = () => {
+            const containerWidth = containerRef.current.offsetWidth;
+            const full = contentRef.current.scrollWidth || 0;
+            const single = repeatCount > 0 ? full / repeatCount : full;
+            if (single > 0) {
+                // Ensure at least two cycles, and enough to cover the container plus one extra for seamless looping
+                const needed = Math.max(2, Math.ceil(containerWidth / single) + 1);
+                if (needed !== repeatCount) setRepeatCount(needed);
+                setCycleWidth(single);
             }
-
-            if (speed < 0 && current >= 0) {
-                current = -totalRowWidth / repeatCount;
-            }
-
-            positionRef.current = current;
-
-            if (contentRef.current) {
-                contentRef.current.style.transform = `translateX(${current}px)`;
-            }
-
-            animationFrameId = requestAnimationFrame(scroll);
         };
 
+        const ro = new ResizeObserver(measure);
+        ro.observe(containerRef.current);
+        // initial measure
+        measure();
+        return () => ro.disconnect();
+    }, [skills, repeatCount]);
 
-        animationFrameId = requestAnimationFrame(scroll);
-
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-        };
-    }, [skills, speed, repeatCount]);
+    const containerInView = useInView(containerRef, { margin: "0px", amount: 0.1 });
+    // Convert the legacy per-frame speed into pixels/second (assumes 60fps previously)
+    const pxPerSecond = Math.abs(speed) * 60;
+    const duration = pxPerSecond > 0 ? cycleWidth / pxPerSecond : 0;
+    const shouldAnimate = !reduced && containerInView && duration > 0;
+    const fromX = speed > 0 ? 0 : -cycleWidth;
+    const toX = speed > 0 ? -cycleWidth : 0;
 
     return (
-        <div ref={containerRef} className="skill-loop-box relative overflow-hidden w-full h-24 mx-auto">
-            <div
+        <div
+            ref={containerRef}
+            className="skill-loop-box relative overflow-hidden w-full h-24 mx-auto pointer-events-none"
+        >
+            <motion.div
                 ref={contentRef}
-                className="flex absolute whitespace-nowrap"
-                style={{
-                    transform: `translateX(${positionRef}px)`,
-                }}
+                className="flex absolute whitespace-nowrap will-change-transform transform-gpu"
+                animate={shouldAnimate ? { x: [fromX, toX] } : { x: 0 }}
+                transition={shouldAnimate ? { duration, ease: "linear", repeat: Infinity } : {}}
             >
                 {repeatedSkills.map((skill, index) => (
                     <SkillCard key={index} skill={skill} />
                 ))}
-
-            </div>
+            </motion.div>
         </div>
     );
 };
@@ -118,9 +100,10 @@ const SkillCardList = () => {
     };
 
     const [row1, row2, row3] = splitSkillsIntoRows(skills);
-    const [speed, setSpeed] = useState(0.25);
-    const moveToLeft = speed;
-    const moveToRight = -speed;
+    // Tune this base speed (pixels per frame from the legacy impl). 0.25 ~= 15px/s
+    const baseSpeed = 0.25;
+    const moveToLeft = baseSpeed;
+    const moveToRight = -baseSpeed;
     const motionRef = React.useRef(null);
     const isInView = useInView(motionRef, { once: true });
     const fadeInVariants = {

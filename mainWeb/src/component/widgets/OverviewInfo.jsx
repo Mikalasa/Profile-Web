@@ -10,7 +10,7 @@ function OverviewInfo() {
         rootMargin: "-100px 0px",
     });
     return (
-        <>
+        <div className="overview-info-container">
             <motion.div
                 ref={ref}
                 variants={textVariant(0)}
@@ -28,7 +28,7 @@ function OverviewInfo() {
             >
                 {IntroductionOverView.paragraph}
             </motion.p>
-        </>
+        </div>
     );
 }
 

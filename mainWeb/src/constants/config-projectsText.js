@@ -1,7 +1,7 @@
 export const projects = [
     {
         title: "Todo List",
-        imageURL: "/projectImage/todolist.png",
+        imageURL: "/projectThumbnail/todolist.png",
         url: 'https://to-do-list.wuaze.com',
         repo: 'https://github.com/Mikalasa/todo-list',
         type: ["Full-Stack", "Web App"],
@@ -16,7 +16,7 @@ export const projects = [
     },
     {
         title: "Encrypt & Decrypt",
-        imageURL: "/projectImage/encrypt.png",
+        imageURL: "/projectThumbnail/encrypt.png",
         url: 'https://mikalasa.github.io/cryption-app/CaesarCipher/Encryption',
         repo: 'https://github.com/Mikalasa/enctryption-and-decryption-webapp',
         type: ["Full-Stack", "Web App"],
@@ -31,7 +31,7 @@ export const projects = [
     },
     {
         title: "MineSweeper",
-        imageURL: "/projectImage/mines.png",
+        imageURL: "/projectThumbnail/mines.png",
         url: 'https://mikalasa.github.io/minesweeper/',
         repo: 'https://github.com/Mikalasa/minesweeper',
         type: ["Web Game"],
@@ -46,7 +46,7 @@ export const projects = [
     },
     {
         title: "Flypper Bird",
-        imageURL: "/projectImage/bird.png",
+        imageURL: "/projectThumbnail/bird.png",
         url: 'https://mikalasa.github.io/Flippy-biard/',
         repo: 'https://github.com/Mikalasa/Flippy-biard',
         type: ["Web Game"],
@@ -61,7 +61,7 @@ export const projects = [
     },
     {
         title: "Travel Webpage",
-        imageURL: "/projectImage/travelWeb.png",
+        imageURL: "/projectThumbnail/travelWeb.png",
         url: 'https://mikalasa.github.io/nz-travel-web/?#',
         repo: 'https://github.com/Mikalasa/nz-travel-web',
         type: ["Web Page"],

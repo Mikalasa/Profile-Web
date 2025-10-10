@@ -25,7 +25,7 @@ const ProjectCard = React.memo(({ project, custom }) => {
             <div className='project-card-title-box flex justify-between items-center'>
                 <h3 className='text-white font-bold text-[20px]'>{project.title}</h3>
                 <motion.img
-                    src={process.env.PUBLIC_URL + '/github-mark.png'}
+                    src={process.env.PUBLIC_URL + '/socialIcon/github-mark.png'}
                     className="github-icon z-10 will-change-transform transform-gpu"
                     whileHover={{ scale: 1.1 }}
                     transition={{ duration: 0.25 }}

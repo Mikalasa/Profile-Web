@@ -18,7 +18,7 @@ const useOperatingSystem = () => {
 
 // Memoized MacModel component
 const MacModel = React.memo(() => {
-    const { scene } = useGLTF(`${process.env.PUBLIC_URL}/pc-bake.glb`);
+    const { scene } = useGLTF(`${process.env.PUBLIC_URL}/3DModel/pc-bake.glb`);
 
     // Memoized positions and rotations
     const modelPosition = useMemo(() => [3, -2.8, 5.5], []);
@@ -40,7 +40,7 @@ const MacModel = React.memo(() => {
     return (
         <>
             {/* Original ambient light */}
-            <ambientLight intensity={4} color={"#ffffff"} />
+            <ambientLight intensity={10} color={"#ffffff"} />
 
             {/* Mac model */}
             <group position={modelPosition} rotation={modelRotation}>

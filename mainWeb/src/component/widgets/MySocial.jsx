@@ -2,8 +2,6 @@ import React from "react";
 import { motion, useInView } from 'framer-motion';
 
 function MySocial({handle808Page}) {
-    // const [isOrbit1Paused, setIsOrbit1Paused] = React.useState(false);
-    // const [isOrbit2Paused, setIsOrbit2Paused] = React.useState(false);
     const ref = React.useRef(null);
     const isInView = useInView(ref, { once: true });
     const fadeInVariants = {
@@ -42,7 +40,6 @@ function MySocial({handle808Page}) {
         }
     }
 
-    const myBlogIcon = process.env.PUBLIC_URL + '/blog.png';
     const mediumIcon = "https://cdn.simpleicons.org/medium/000000";
     const youtubeIcon = "https://cdn.simpleicons.org/youtube/FF0000";
     const bilibiliIcon = "https://cdn.simpleicons.org/bilibili/00A1D6";
@@ -97,56 +94,16 @@ function MySocial({handle808Page}) {
                             <div className="planet"
                                  onMouseEnter={handleHover}
                                  onMouseLeave={handleHoverLeave}
-                                 onClick={() => handleIconClick('https://mikalasa.github.io/my-blog/', 'orbit1', 'done', 'blog')}
+                                 onClick={() => handleIconClick('https://cdn.simpleicons.org/bilibili/00A1D6', 'orbit1', 'undone', 'bilibili')}
                             >
                                 <img
-                                    src={myBlogIcon}
-                                    alt="Medium orbit1"
+                                    src={bilibiliIcon}
+                                    alt="bilibili orbit1"
                                     data-orbit="orbit1"
                                 />
                             </div>
                         </div>
                     </div>
-
-                    {/* Orbit2: Bilibili, Twitter, Behance */}
-                    {/*<div className={`orbit-2 orbit-2-move ${isOrbit2Paused ? 'paused' : ''}`}>
-                        <div className="planet-wrapper">
-                            <div className="planet"
-                                 onMouseEnter={handleHover}
-                                 onMouseLeave={handleHoverLeave}
-                                 onClick={() => handleIconClick('https://www.bilibili.com', 'orbit2', 'undone', 'bilibili')}
-                            >
-                                <img
-                                    src={bilibiliIcon}
-                                    alt="Bilibili orbit2"
-                                />
-                            </div>
-                        </div>
-                        <div className="planet-wrapper">
-                            <div className="planet"
-                                 onMouseEnter={handleHover}
-                                 onMouseLeave={handleHoverLeave}
-                                 onClick={() => handleIconClick('https://twitter.com', 'orbit2', 'undone', 'twitter')}
-                            >
-                                <img
-                                    src={xIcon}
-                                    alt="Twitter orbit2"
-                                />
-                            </div>
-                        </div>
-                        <div className="planet-wrapper">
-                            <div className="planet"
-                                 onMouseEnter={handleHover}
-                                 onMouseLeave={handleHoverLeave}
-                                 onClick={() => handleIconClick('https://www.behance.net/xingyixxx', 'orbit2', 'done', 'behance')}
-                            >
-                                <img
-                                    src={behanceIcon}
-                                    alt="Behance orbit2"
-                                />
-                            </div>
-                        </div>
-                    </div>*/}
                 </div>
             </div>
         )

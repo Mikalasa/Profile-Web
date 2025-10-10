@@ -1,7 +1,5 @@
-import ProjectCardList from "../section/ProjectCardList.jsx";
-import ProjectIntroduction from "../section/ProjectIntroduction.jsx";
-import PageExtender from "../widgets/pageExtender.jsx";
-import {isMobile} from "react-device-detect";
+import ProjectCardList from "../widgets/ProjectCardList.jsx";
+import ProjectIntroduction from "../widgets/ProjectIntroduction.jsx";
 
 function Projects() {
   return (
@@ -10,7 +8,6 @@ function Projects() {
               <div className="projects">
                   <ProjectIntroduction/>
                   <ProjectCardList/>
-                  {isMobile ? <></> : <PageExtender/>}
               </div>
           </div>
       </section>

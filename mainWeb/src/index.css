@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Custom CSS */
-@import "css/common/general.css";
+@import "global.css";
 @import "css/common/container.css";
 @import "css/widgets/canvas-loader.css";
 @import "css/widgets/project-card.css";

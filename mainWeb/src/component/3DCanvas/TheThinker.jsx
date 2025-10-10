@@ -8,10 +8,10 @@ import CanvasLoader from "../widgets/CanvasLoader.jsx";
 import { isMobile } from "react-device-detect";
 
 // Preload the GLTF model for faster loading
-useGLTF.preload(`${process.env.PUBLIC_URL}/the_thinker.glb`);
+useGLTF.preload(`${process.env.PUBLIC_URL}/3DModel/the_thinker.glb`);
 
 const ThinkerModel = memo(() => {
-    const { scene } = useGLTF(`${process.env.PUBLIC_URL}/the_thinker.glb`);
+    const { scene } = useGLTF(`${process.env.PUBLIC_URL}/3DModel/the_thinker.glb`);
 
     // Memoize calculations for performance
     const scale = useMemo(() => (isMobile ? 2.5 : 3.5), []);
@@ -48,21 +48,32 @@ const ThinkerModel = memo(() => {
     return (
         <>
             {/* Original lighting setup */}
-            <ambientLight intensity={0.2} color="#ffffff" />
+            <ambientLight intensity={0.15} color="#ffffff" />
             <pointLight
-                intensity={10}
+                intensity={30}
                 position={[-1, 5, 7]}
+                color="#FFEED6"
                 castShadow
-                shadow-mapSize-width={256}
-                shadow-mapSize-height={256}
+                shadow-mapSize-width={1024}
+                shadow-mapSize-height={1024}
                 shadow-radius={10}
             />
             <pointLight
-                intensity={20}
+                intensity={30}
                 position={[-8, 6, -3]}
+                color="#CFE3FF"
                 castShadow
-                shadow-mapSize-width={256}
-                shadow-mapSize-height={256}
+                shadow-mapSize-width={1024}
+                shadow-mapSize-height={1024}
+                shadow-radius={10}
+            />
+            <pointLight
+                intensity={40}
+                position={[-8, 6, -3]}
+                color="#B5D9FF"
+                castShadow
+                shadow-mapSize-width={1024}
+                shadow-mapSize-height={1024}
                 shadow-radius={10}
             />
 
@@ -81,14 +92,13 @@ const ThinkerModel = memo(() => {
 
 const GroundPlane = memo(() => {
     // Use useLoader for efficient texture loading
-    const texture = useLoader(TextureLoader, `${process.env.PUBLIC_URL}/hero-ground.webp`);
+    const texture = useLoader(TextureLoader, `${process.env.PUBLIC_URL}/3DTexture/hero-ground.webp`);
 
     return (
         <mesh
             rotation={[-Math.PI / 2 - 0.3, 0, -0.1]}
             position={[0, -3, 0]}
             receiveShadow
-            castShadow
         >
             <planeGeometry args={[400, 400]} />
             <meshPhysicalMaterial map={texture} metalness={0.7} roughness={0.2} />

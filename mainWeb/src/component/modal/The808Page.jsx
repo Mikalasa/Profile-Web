@@ -11,7 +11,7 @@ function The808Page({ platform, handle808Page }) {
         { url: "https://github.com/Mikalasa", img: "https://cdn.simpleicons.org/github/ffffff" },
         { url: "https://medium.com/@xingyi-posts", img: "https://cdn.simpleicons.org/medium/ffffff" },
         { url: "https://www.behance.net/xingyixxx", img: "https://cdn.simpleicons.org/behance/1769FF" },
-        { url: "https://mikalasa.github.io/my-blog/", img: `${process.env.PUBLIC_URL}/blog-1.png` },
+        // { url: "https://mikalasa.github.io/my-blog/", img: `${process.env.PUBLIC_URL}/blog-1.png` },
     ];
 
     return (

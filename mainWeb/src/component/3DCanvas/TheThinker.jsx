@@ -71,7 +71,7 @@ const ThinkerModel = memo(() => {
                 intensity={40}
                 position={[-8, 6, -3]}
                 color="#B5D9FF"
-                castShadow
+                // castShadow
                 shadow-mapSize-width={1024}
                 shadow-mapSize-height={1024}
                 shadow-radius={10}

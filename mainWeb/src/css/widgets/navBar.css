@@ -1,26 +1,87 @@
-.navbar-item {
+/* === Sharper blur + brighter edge (overrides) === */
+:root{
+    /* dial back translucency a touch and strengthen scrolled state */
+    --glass-alpha: .30;
+    --glass-alpha-scrolled: .46;
+
+    /* new tweakable vars */
+    --glass-blur: 9px;              /* was 14px */
+    --glass-blur-scrolled: 13px;    /* was 18px */
+    --glass-border-strong: rgba(255,255,255,.28); /* brighter edge */
+}
+
+/* use smaller blur radii */
+.glass{
+    backdrop-filter: saturate(160%) blur(var(--glass-blur));
+    -webkit-backdrop-filter: saturate(160%) blur(var(--glass-blur));
+}
+.glass.glass--scrolled{
+    backdrop-filter: saturate(180%) blur(var(--glass-blur-scrolled));
+    -webkit-backdrop-filter: saturate(180%) blur(var(--glass-blur-scrolled));
+}
+
+/* stronger, crisper highlight sheen */
+.glass::before{
+    background:
+            radial-gradient(110% 70% at 0% 0%, rgba(255,255,255,.20), transparent 55%),
+            linear-gradient(to bottom, rgba(255,255,255,.08), transparent 30%);
+}
+
+/* brighter, more visible border ring for card-style nav */
+.glass--card{
+    position: relative;
+    border: 1px solid var(--glass-border-strong); /* stronger than --glass-border */
+    /* subtle inner stroke to make the edge read on dark bg */
+    box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.10),
+            0 15px 40px -12px var(--glass-shadow);
+}
+
+/* keep pseudo elements inside the rounded radius */
+.glass--card::before,
+.glass--card::after{ border-radius: inherit; }
+
+/* optional: extra top-edge kiss of light (very iOS) */
+.glass--card::after{
+    content:"";
+    position:absolute; inset:0; pointer-events:none;
+    background:
+            linear-gradient(to bottom, rgba(255,255,255,.18), rgba(255,255,255,0) 24%);
+    mask: linear-gradient(#000, transparent 70%);
+    -webkit-mask: linear-gradient(#000, transparent 70%);
+}
+
+/* Fallback when backdrop-filter isn’t supported */
+@supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)){
+    .glass{ background: rgba(16,18,27,.9); }
+    .glass.glass--scrolled{ background: rgba(16,18,27,.95); }
+    .glass-panel{ background: rgba(16,18,27,.92); }
+}
+
+/* ===== Nav link micro-interactions ===== */
+.navbar-item{
     position: relative;
     text-decoration: none;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition: color .2s ease, transform .2s ease;
+    will-change: transform, color;
 }
-
-.navbar-item:hover {
-    color: #FFD700;
-}
-
-.navbar-item::after {
+.navbar-item:hover{ color: #EAF2FF; }
+.navbar-item::after{
     content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #4FAAF7;
-    transition: width 0.3s ease;
+    position: absolute; bottom: -6px; left: 0;
+    width: 0; height: 2px; border-radius: 2px;
+    background: linear-gradient(90deg, #4FAAF7, rgba(79,170,247,.2));
+    transition: width .25s ease;
+}
+.navbar-item:hover::after{ width: 100%; }
+
+/* Subtle press on touch */
+@media (hover: none){
+    .navbar-item:active{ transform: scale(.98); }
 }
 
-.navbar-item:hover::after {
-    width: 100%;
+/* Respect reduced motion users */
+@media (prefers-reduced-motion: reduce){
+    .navbar-item{ transition: none; }
+    .navbar-item::after{ transition: none; }
 }
-
-

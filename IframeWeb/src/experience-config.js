@@ -3,6 +3,23 @@ export const experienceConfig = {
         {
             "description": (
                 <ul>
+                    <li>Building a strong foundation in graphic design, 3D modeling, and UI/UX design through undergraduate studies.</li>
+                    <li>Developing proficiency in HTML, CSS, and JavaScript.</li>
+                    <li>Becoming proficient in tools like Adobe Suite, Figma, and Cinema 4D, continuously honing strong design skills for my career.</li>
+                </ul>
+            )
+        },
+        {
+            "description": (
+                <ul>
+                    <li>Working on enterprise-level mobile applications for Huawei as a client, contributing to refactoring and optimization.</li>
+                    <li>Leveraging modern front-end frameworks, system-level APIs, and structured testing to improve performance, data handling efficiency, and overall stability.</li>
+                </ul>
+            )
+        },
+        {
+            "description": (
+                <ul>
                     <li>Developed expertise in Java, CI/CD pipelines, server deployment, MySQL database management, and RESTful API design during postgraduate studies.</li>
                     <li>Enhanced front-end and back-end development skills, providing a solid foundation for full-stack development.</li>
                 </ul>
@@ -11,20 +28,10 @@ export const experienceConfig = {
         {
             "description": (
                 <ul>
-                    <li>Developed three mobile applications for client Huawei on OpenHarmony OS using the ArkUI framework.</li>
-                    <li>Responsible for UI refactoring, core feature implementation, API integration, testing, and debugging to ensure high performance and compatibility on the development board.</li>
-                    <li>Collaborated with cross-functional teams, gaining valuable problem-solving skills and a strong understanding of end-to-end development workflows.</li>
+                    <li>Focusing on automated and manual testing, including Cypress automation, smoke testing, and regression testing, to ensure consistent quality and release readiness.</li>
+                    <li>Verifying functionality against acceptance criteria, with database-level validation to ensure data accuracy.</li>
                 </ul>
             )
         },
-        {
-            "description": (
-                <ul>
-                    <li>Gained expertise in graphic design, game design, 3D modeling, and web UI/UX design during undergraduate studies.</li>
-                    <li>Acquired proficiency in HTML, CSS, and JavaScript.</li>
-                    <li>Became proficient in tools like Adobe Creative Suite, Maya, C4D, and Substance Painter, honing strong design skills and creating a memorable foundation for my career.</li>
-                </ul>
-            )
-        }
     ]
 };

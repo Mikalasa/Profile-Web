@@ -10,7 +10,7 @@ function ProjectIntroduction() {
         rootMargin: "-100px 0px",
     });
     return (
-        <div className="projects-introduction py-10 flex flex-col items-center justify-center">
+        <div className="projects-introduction py-14 flex flex-col justify-center">
             <motion.div
                 ref={ref}
                 className={`mt-14`} variants={textVariant(0)}
@@ -24,7 +24,7 @@ function ProjectIntroduction() {
                 variants={fadeIn("", "", 0.3, 4)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className='the-paragraph the-paragraph-center mt-4 text-[#C0C0C0] text-[17px] max-w-3xl leading-[30px]'
+                className='mt-4 text-[#C0C0C0] text-[17px] leading-[30px]'
             >
                 {projectOverView.paragraph}
             </motion.p>

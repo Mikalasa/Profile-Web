@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useLayoutEffect, useState } from 'react';
 import { skills } from '../../constants/config-skills';
 import { motion, useInView, useReducedMotion } from "framer-motion";
 
@@ -21,6 +21,10 @@ const InfiniteScrollRow = ({ skills, speed }) => {
     const reduced = useReducedMotion();
     const [cycleWidth, setCycleWidth] = useState(0);
     const [repeatCount, setRepeatCount] = useState(2);
+    const repeatCountRef = useRef(repeatCount);
+    useEffect(() => {
+        repeatCountRef.current = repeatCount;
+    }, [repeatCount]);
     const repeatedSkills = React.useMemo(
         () => Array.from({ length: repeatCount }).flatMap(() => skills),
         [skills, repeatCount]
@@ -28,15 +32,17 @@ const InfiniteScrollRow = ({ skills, speed }) => {
 
 
     // Measure the width of a single cycle (one set of skills)
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (!contentRef.current) return;
-        queueMicrotask(() => {
+        const raf = requestAnimationFrame(() => {
             if (!contentRef.current) return;
             const full = contentRef.current.scrollWidth;
-            const single = repeatCount > 0 ? full / repeatCount : full;
+            const rc = repeatCountRef.current || 1;
+            const single = rc > 0 ? full / rc : full;
             setCycleWidth(single);
         });
-    }, [skills, repeatCount]);
+        return () => cancelAnimationFrame(raf);
+    }, [skills]);
 
     // Keep measurements in sync and ensure we have enough repeats to cover the width
     useEffect(() => {
@@ -45,11 +51,13 @@ const InfiniteScrollRow = ({ skills, speed }) => {
         const measure = () => {
             const containerWidth = containerRef.current.offsetWidth;
             const full = contentRef.current.scrollWidth || 0;
-            const single = repeatCount > 0 ? full / repeatCount : full;
+            const rc = repeatCountRef.current || 1;
+            const single = rc > 0 ? full / rc : full;
+
             if (single > 0) {
                 // Ensure at least two cycles, and enough to cover the container plus one extra for seamless looping
                 const needed = Math.max(2, Math.ceil(containerWidth / single) + 1);
-                if (needed !== repeatCount) setRepeatCount(needed);
+                if (needed !== rc) setRepeatCount(needed);
                 setCycleWidth(single);
             }
         };
@@ -59,7 +67,7 @@ const InfiniteScrollRow = ({ skills, speed }) => {
         // initial measure
         measure();
         return () => ro.disconnect();
-    }, [skills, repeatCount]);
+    }, [skills]);
 
     const containerInView = useInView(containerRef, { margin: "0px", amount: 0.1 });
     // Convert the legacy per-frame speed into pixels/second (assumes 60fps previously)
@@ -80,9 +88,13 @@ const InfiniteScrollRow = ({ skills, speed }) => {
                 animate={shouldAnimate ? { x: [fromX, toX] } : { x: 0 }}
                 transition={shouldAnimate ? { duration, ease: "linear", repeat: Infinity } : {}}
             >
-                {repeatedSkills.map((skill, index) => (
-                    <SkillCard key={index} skill={skill} />
-                ))}
+                {repeatedSkills.map((skill, index) => {
+                    const len = skills.length || 1;
+                    const cycleIndex = Math.floor(index / len);
+                    const posIndex = index % len;
+                    const key = `${skill.name}-${cycleIndex}-${posIndex}`;
+                    return <SkillCard key={key} skill={skill} />;
+                })}
             </motion.div>
         </div>
     );

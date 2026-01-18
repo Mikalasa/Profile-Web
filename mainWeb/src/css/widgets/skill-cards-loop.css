@@ -8,17 +8,6 @@ looping skill cards animation //迁移到tailwindcss之前的实现
     width: 100%;
     max-width: 600px
 }
-/*.skill-loop-box {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    position: relative;*/
-/*    overflow: hidden;*/
-/*    max-width: 600px;*/
-/*    min-width: 300px;*/
-/*    height: 100px;*/
-/*    width: 100%;*/
-/*}*/
 
 .skill-loop-box {
     display: flex;

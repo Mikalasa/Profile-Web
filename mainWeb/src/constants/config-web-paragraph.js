@@ -20,47 +20,35 @@ export const heroText = {
     title_f: "Hi, I'm ",
     title_l: "Xingyi",
     description: <>
-        {"A passionate and creative developer."}
+        {"A creative developer."}
     </>
 }
 
 export const IntroductionOverView = {
     paragraph:
         <>
-            I am deeply passionate about <span
-            className="text-[20px] the-highLight-words-1">front-end development</span> and <span
-            className="text-[20px] the-highLight-words-1">full-stack  development.</span>
+            Throughout my career, I have taken on roles as both a <span
+            className="text-[20px] the-highLight-words">front-end developer</span> and a <span
+            className="text-[20px] the-highLight-words">tester</span>.
             <br/>
-            My background in design education has cultivated a strong interest in visually driven effect development. In my
-            free time, I enjoy working on fun side projects and attending various meetups. Occasionally, I also write
-            technical articles. Feel free to follow my channels to share and connect. Thank you!
+            Beyond my <span className="text-[20px] the-highLight-words">core skills</span>
+            , I see development not merely as coding, but as a mindset and a path toward the future.
             <br/>
+            I am now focusing on framework design and AI, exploring how technology can create long-term value.
             <br/>
-            <span className="text-[20px] the-highLight-words-1">core skills.</span>
         </>
 }
 export const projectOverView = {
     paragraph:
         <>
-            These are some personal projects I have completed in the past, primarily consisting of <span
-            className="text-[20px] the-highLight-words-2">full-stack web applications</span> and <span
-            className="text-[20px] the-highLight-words-2">games</span> based on frontend
-            technologies.
-            <br/>
-            <br/>
-            <span className="the-highlight-text-box">Click a card to view the live demo page for each project.</span>
+            Exploring possibilities through ongoing experimentation,
+
+            building engaging <span
+            className="text-[20px] the-highLight-words">full-stack</span> and <span
+            className="text-[20px] the-highLight-words">AI</span> projects.
         </>
 }
 
-export const aboutOverView = {
-    paragraph:
-        <>
-            {
-                `During more than two years of learning and working in code development, I have accumulated experience in the relevant industry.
-                If you would like to know more about my experiences, please kindly browse through the webpage on the monitor below.`
-            }
-        </>
-}
 
 export {
     menu,

@@ -5,7 +5,7 @@ function Projects() {
   return (
       <section id="projects">
           <div className="layout-container">
-              <div className="projects">
+              <div className="projects w-3/4">
                   <ProjectIntroduction/>
                   <ProjectCardList/>
               </div>

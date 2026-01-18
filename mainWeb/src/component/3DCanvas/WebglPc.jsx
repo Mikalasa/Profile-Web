@@ -21,9 +21,9 @@ const MacModel = React.memo(() => {
     const { scene } = useGLTF(`${process.env.PUBLIC_URL}/3DModel/pc-bake.glb`);
 
     // Memoized positions and rotations
-    const modelPosition = useMemo(() => [3, -2.8, 5.5], []);
+    const modelPosition = useMemo(() => [3, -3.0, 2.5], []);
     const modelRotation = useMemo(() => [0, -Math.PI / 2, -3.8 * (Math.PI / 180)], []);
-    const iframePosition = useMemo(() => [0, 0.25, 4.4], []);
+    const iframePosition = useMemo(() => [0, 0.05, 1.35], []);
 
     const os = useOperatingSystem();
 
@@ -52,7 +52,7 @@ const MacModel = React.memo(() => {
                 <Html
                     transform
                     wrapperClass="webgl-iframe-wrapper"
-                    distanceFactor={1.64}
+                    distanceFactor={1.70}
                     occlude
                 >
                     <iframe

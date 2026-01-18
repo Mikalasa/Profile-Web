@@ -1,54 +1,69 @@
 .project-card {
-    width: 20rem;
-    height: 30rem;
+    width: 100%;
+    height: 20rem;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     opacity: 0.95;
     border-radius: 15px;
-    padding: 10px;
+    padding: 15px;
     background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.8));
     box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.5), /* 黑色阴影 */
-            0 2px 3px rgba(255, 255, 255, 0.1), /* 白色高光 */
-            0 2px 5px rgba(58, 123, 253, 0.6) !important; /* 淡蓝色光晕 */
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-    background-size: 15px 15px;
+            0 5px 15px rgba(0, 0, 0, 0.5),
+            0 2px 3px rgba(255, 255, 255, 0.1),
+            0 2px 5px rgba(58, 123, 253, 0.6) !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    animation: move-stars 10s linear infinite;
+    overflow: hidden;
+    z-index: 1;
     position: relative;
 }
 
 .project-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: -30px;
+    border-radius: 15px;
+    z-index: 0;
+    /* Star pattern */
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 15px 15px;
+    /* GPU-friendly movement */
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    /* Hover-only animation */
+    animation: stars-move 10s linear infinite;
+    animation-play-state: paused;
+    pointer-events: none;
+}
+.project-card:hover::before {
+    animation-play-state: running;
+}
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     border-radius: 15px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
     z-index: 2;
+    pointer-events: none;
 }
 .project-card:hover .project-cover {
     transform: scale(1.2);
 }
 
 .project-card-title-box {
-    width: 90%;
-    margin: 0 auto;
+    height: 10%;
 }
 
 .project-img-box {
-    width: 90%;
     overflow: hidden;
     border-radius: 0.5rem;
     position: relative;
-    margin: 0 auto;
     box-shadow: 0 10px 15px rgb(0, 0, 0);
 }
 .project-tag-box {
-    width: 90%;
-    margin: 0 auto;
+    height: 25%;
+    padding-top: 1rem;
+    display: flex;
 }
 .project-text-box {
     padding: 0.5rem;
@@ -64,11 +79,11 @@
     width: 2rem;
     height: 2rem;
 }
-@keyframes move-stars {
+@keyframes stars-move {
     0% {
-        background-position: 0 0;
+        transform: translate3d(0, 0, 0);
     }
     100% {
-        background-position: 50px 50px;
+        transform: translate3d(50px, 50px, 0);
     }
 }

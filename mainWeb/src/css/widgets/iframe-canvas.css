@@ -3,7 +3,7 @@
 }
 .webgl-iframe {
     border: none;
-    width: 1540px;
+    width: 1500px;
     height: 840px;
     will-change: transform, opacity;
 }

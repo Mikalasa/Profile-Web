@@ -80,7 +80,7 @@ function HeroCard() {
                                 <span className='text-[#FF7F50]'>{heroText.title_l}</span>
                             </h1>
                             <br/>
-                            <p className={`${customTailwind.heroSubText} mt-2 text-white-100`}>
+                            <p className={`${customTailwind.heroSubText} mt-2 text-white-50`}>
                                 {heroText.description}
                             </p>
                         </motion.div>

@@ -3,7 +3,7 @@ import {Canvas} from "@react-three/fiber";
 import React, {useEffect, useRef, useState} from "react";
 
 function Flat() {
-    const mockupImage = process.env.PUBLIC_URL + '/mockup_iphone.png';
+    const mockupImage = process.env.PUBLIC_URL + '/3DTexture/mockup_iphone.png';
     const imgRef = useRef(null);
     const [iframeHeight, setIframeHeight] = useState(0);
 
@@ -29,7 +29,7 @@ function Flat() {
     }
 
     return (
-    <div className="flat-bg">
+    <div className="flat-bg my-10">
         <Canvas>
             <Html
                 wrapperClass="webgl-iframe-wrapper"
@@ -45,7 +45,7 @@ function Flat() {
                     <iframe
                         title={"iframe-flat"}
                         className="webgl-iframe-flat"
-                        src="https://mikalasa.github.io/ProfileWeb-Iframe-About/"
+                        src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
                         style={{ height: `${iframeHeight}px` }}
                     />
                 </div>

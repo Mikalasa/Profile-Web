@@ -44,7 +44,7 @@ const Navbar = () => {
             id="navbar"
             className={`${customTailwind.paddingX} w-[92%] sm:w-4/5 fixed top-4 left-1/2 -translate-x-1/2 z-20 glass ${
                 scrolled ? "glass--scrolled" : ""
-            } rounded-2xl overflow-hidden glass--card h-[70px] flex items-center`}
+            } rounded-2xl overflow-visible sm:overflow-hidden glass--card h-[70px] flex items-center`}
         >
             <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
                 {/* Brand */}
@@ -100,24 +100,39 @@ const Navbar = () => {
                     </button>
 
                     <div
+                        style={{
+                            WebkitBackdropFilter: "saturate(190%) blur(50px)",
+                            backdropFilter: "saturate(190%) blur(50px)",
+                            background: "rgba(16,18,27,0.72)",
+                        }}
                         className={`${
                             !toggle ? "hidden" : "flex"
-                        } p-6 glass-panel absolute top-20 right-0 mx-4 my-2 min-w-[160px] z-40 rounded-2xl`}
+                        } absolute top-20 right-0 z-40 mx-4 my-2 min-w-[200px] flex-col rounded-2xl overflow-hidden glass glass--card ${
+                            scrolled ? "glass--scrolled" : ""
+                        } p-4`}
                     >
-                        <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
-                            {navLinks.map((nav) => (
-                                <li
-                                    key={nav.id}
-                                    className={`font-poppins font-medium cursor-pointer text-[16px] ${
-                                        active === nav.title ? "text-gray-300" : "text-white"
-                                    }`}
-                                >
-                                    <a href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav.id, nav.title)}>
-                                        {nav.title}
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
+                        <div
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/55 to-black/45"
+                            aria-hidden="true"
+                        />
+                        <div className="relative z-10">
+                            <ul className="list-none flex flex-col gap-1">
+                                {navLinks.map((nav) => (
+                                    <li
+                                        key={nav.id}
+                                        className={`w-full rounded-xl px-4 py-3 text-[16px] font-semibold tracking-tight transition ${
+                                            active === nav.title
+                                                ? "bg-white/15 text-white"
+                                                : "text-white/85 hover:bg-white/10 hover:text-white"
+                                        }`}
+                                    >
+                                        <a className="block w-full" href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav.id, nav.title)}>
+                                            {nav.title}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>

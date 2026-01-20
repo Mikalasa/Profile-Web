@@ -17,13 +17,16 @@ const ThinkerModel = memo(() => {
     const scale = useMemo(() => (isMobile ? 2.5 : 3.5), []);
     const position = useMemo(() => (isMobile ? [-1.8, 3, 10] : [-5.0, -0.5, 5]), []);
     const rotationIndex = useMemo(() => (isMobile ? 0.25 : 1), []);
+    const ambientIntensity = useMemo(() => (isMobile ? 0.34 : 0.15), []);
+    const lightBoost = useMemo(() => (isMobile ? 1.55 : 1), []);
+    const enableShadows = useMemo(() => !isMobile, []);
 
     useEffect(() => {
         if (scene) {
             scene.traverse((child) => {
                 if (child.isMesh) {
-                    child.castShadow = true;
-                    child.receiveShadow = true;
+                    child.castShadow = enableShadows;
+                    child.receiveShadow = enableShadows;
                 }
             });
         }
@@ -48,27 +51,27 @@ const ThinkerModel = memo(() => {
     return (
         <>
             {/* Original lighting setup */}
-            <ambientLight intensity={0.15} color="#ffffff" />
+            <ambientLight intensity={ambientIntensity} color="#ffffff" />
             <pointLight
-                intensity={30}
+                intensity={30 * lightBoost}
                 position={[-1, 5, 7]}
                 color="#FFEED6"
-                castShadow
+                castShadow={enableShadows}
                 shadow-mapSize-width={1024}
                 shadow-mapSize-height={1024}
                 shadow-radius={10}
             />
             <pointLight
-                intensity={30}
+                intensity={30 * lightBoost}
                 position={[-8, 6, -3]}
                 color="#CFE3FF"
-                castShadow
+                castShadow={enableShadows}
                 shadow-mapSize-width={1024}
                 shadow-mapSize-height={1024}
                 shadow-radius={10}
             />
             <pointLight
-                intensity={40}
+                intensity={40 * lightBoost}
                 position={[-8, 6, -3]}
                 color="#B5D9FF"
                 // castShadow
@@ -98,7 +101,7 @@ const GroundPlane = memo(() => {
         <mesh
             rotation={[-Math.PI / 2 - 0.3, 0, -0.1]}
             position={[0, -3, 0]}
-            receiveShadow
+            receiveShadow={!isMobile}
         >
             <planeGeometry args={[400, 400]} />
             <meshPhysicalMaterial map={texture} metalness={0.7} roughness={0.2} />
@@ -130,21 +133,29 @@ const TheThinkerCanvas = () => {
     return (
         <div className="thinker-bg">
             <Canvas
-                shadows
+                shadows={!isMobile}
                 dpr={[1, 2]} // Limit device pixel ratio for performance
-                camera={{ position: [0, 30, 0], fov: 25, near: 0.1, far: 200 }}
+                camera={{ position: isMobile ? [0, 15, 26] : [0, 30, 0], fov: 25, near: 0.1, far: 200 }}
+                onCreated={({ camera }) => {
+                    if (isMobile) {
+                        camera.lookAt(0, 0, 0);
+                        camera.updateProjectionMatrix();
+                    }
+                }}
                 gl={{ antialias: true, alpha: false }}
             >
                 <Suspense fallback={<CanvasLoader />}>
                     <DynamicFrameControl>
-                        <OrbitControls
-                            enableRotate={true}
-                            enableZoom={false}
-                            maxPolarAngle={maxPolarAngle}
-                            minPolarAngle={minPolarAngle}
-                            minAzimuthAngle={minAzimuthAngle}
-                            maxAzimuthAngle={maxAzimuthAngle}
-                        />
+                        {!isMobile && (
+                            <OrbitControls
+                                enableRotate={true}
+                                enableZoom={false}
+                                maxPolarAngle={maxPolarAngle}
+                                minPolarAngle={minPolarAngle}
+                                minAzimuthAngle={minAzimuthAngle}
+                                maxAzimuthAngle={maxAzimuthAngle}
+                            />
+                        )}
                         <ThinkerModel />
                         <GroundPlane />
                     </DynamicFrameControl>

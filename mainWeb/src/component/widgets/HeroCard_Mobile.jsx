@@ -5,31 +5,18 @@ import {heroText} from "../../constants/config-web-paragraph";
 
 
 function HeroCardMobile() {
-    const isMobileCanvasCoverDiv = (
-        <>
-            <div className="isMobileCanvasCoverDiv-right"></div>
-            <div className="isMobileCanvasCoverDiv-buttom"></div>
-        </>
-    )
-
     return (
         <motion.div
-            id="hero-card-bg"
+            id="hero-card-bg-mobile"
             className={` ${customTailwind.paddingX} flex flex-row items-start gap-5`}
             initial={{opacity: 0, scale: 0.5}}
             animate={{opacity: 1, scale: 1}}
             transition={{duration: 5, type: 'spring', damping: 10, stiffness: 100}}
         >
             <div>
-                <div id="hero-card-top">
-                    <div
-                        className="hero-card"
-                    >
-                        <div className='hero-card-title flex flex-col items-center mt-5'>
-                            <div className='w-5 h-5 rounded-full bg-[#FF7F50]'/>
-                            <div className='w-1 sm:h-80 h-40 violet-gradient'/>
-                        </div>
-                        <motion.div className={"hero-card-des"}>
+                <div id="hero-card-top w-full">
+                    <div className="hero-card-mobile">
+                        <motion.div className={"w-full relative"}>
                             <h1 className={`${customTailwind.heroHeadText} text-white`}>{heroText.title_f}
                                 <span className='text-[#FF7F50]'>{heroText.title_l}</span>
                             </h1>
@@ -41,10 +28,6 @@ function HeroCardMobile() {
                     </div>
                 </div>
             </div>
-
-            {isMobile ? (
-                isMobileCanvasCoverDiv
-            ) : null}
         </motion.div>
 
     );

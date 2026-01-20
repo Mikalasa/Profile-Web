@@ -33,6 +33,7 @@ function Flat() {
         <Canvas>
             <Html
                 wrapperClass="webgl-iframe-wrapper"
+                distanceFactor={6.2}
             >
                 <div className="iframe-flat-container">
                     <img

@@ -28,7 +28,7 @@ const ProjectCard = React.memo(({ project, custom }) => {
                 <motion.img
                     src={process.env.PUBLIC_URL + '/socialIcon/github-mark.png'}
                     className="github-icon z-10 will-change-transform transform-gpu"
-                    whileHover={{ scale: 1.1 }}
+                    whileHover={isMobile ? undefined : { scale: 1.1 }}
                     transition={{ duration: 0.25 }}
                     onClick={openRepo}
                 />
@@ -69,8 +69,8 @@ const ProjectCard = React.memo(({ project, custom }) => {
 
     return (
         <div
-            onMouseEnter={() => setIsTiltActive(true)}
-            onMouseLeave={() => setIsTiltActive(false)}
+            onMouseEnter={!isMobile ? () => setIsTiltActive(true) : undefined}
+            onMouseLeave={!isMobile ? () => setIsTiltActive(false) : undefined}
         >
             {isMobile ? (
                 card

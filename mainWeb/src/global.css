@@ -71,3 +71,50 @@ html {
 .the-paragraph-center {
     text-align: center;
 }
+
+
+
+
+    /* Scoped scrollbar styling: only for ProjectCardList */
+.projectcardlist-scroll{
+     scrollbar-gutter: stable;
+     scrollbar-width: thin;                 /* Firefox */
+     scrollbar-color: rgba(255,255,255,.28) rgba(0,0,0,0); /* thumb / track */
+}
+
+/* WebKit (Chrome/Safari/Edge) */
+.projectcardlist-scroll::-webkit-scrollbar{
+    width: 10px;
+}
+.projectcardlist-scroll::-webkit-scrollbar-track{
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+    margin: 10px 0;
+}
+.projectcardlist-scroll::-webkit-scrollbar-thumb{
+    background: linear-gradient(
+            to bottom,
+            rgba(125, 211, 252, 0.35),
+            rgba(34, 211, 238, 0.22),
+            rgba(59, 130, 246, 0.32)
+    );
+    border-radius: 999px;
+    border: 2px solid rgba(0,0,0,0.25);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+.projectcardlist-scroll::-webkit-scrollbar-thumb:hover{
+    background: linear-gradient(
+            to bottom,
+            rgba(125, 211, 252, 0.55),
+            rgba(34, 211, 238, 0.40),
+            rgba(59, 130, 246, 0.50)
+    );
+}
+.projectcardlist-scroll::-webkit-scrollbar-thumb:active{
+    background: linear-gradient(
+            to bottom,
+            rgba(125, 211, 252, 0.65),
+            rgba(34, 211, 238, 0.50),
+            rgba(59, 130, 246, 0.60)
+    );
+}

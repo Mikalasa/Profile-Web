@@ -97,15 +97,40 @@ const ProjectCard = React.memo(({ project, custom }) => {
 
 export default function ProjectCardList() {
     return (
-        <div className="w-full max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center">
-                {projects.map((project, index) => (
-                    <ProjectCard
-                        key={project.id || index}
-                        project={project}
-                        custom={index}
-                    />
-                ))}
+        // This container fills the remaining height of the Projects section.
+        <div className="relative h-full w-full max-w-7xl mx-auto p-2">
+            <div className="absolute inset-0 rounded-3xl pointer-events-none">
+                {/* Edge glow (border-only) */}
+                <div
+                    className="absolute inset-0 rounded-3xl"
+                    style={{
+                        boxShadow: "0 0 0 1px rgba(120,180,255,0.35), 0 0 24px rgba(120,180,255,0.35)",
+                    }}
+                    aria-hidden="true"
+                />
+
+                {/* Glass background */}
+                <div
+                    className="absolute inset-0 rounded-3xl border border-white/10
+                               bg-black/30 backdrop-blur-xl
+                               shadow-[0_20px_80px_rgba(0,0,0,0.55)]"
+                />
+            </div>
+
+            {/* Inner scroll area */}
+            <div className="relative z-10 h-full overflow-y-auto overscroll-contain px-2 sm:px-6 py-6 projectcardlist-scroll">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center px-2">
+                    {projects.map((project, index) => (
+                        <ProjectCard
+                            key={project.id || index}
+                            project={project}
+                            custom={index}
+                        />
+                    ))}
+                </div>
+
+                {/* Subtle bottom fade cue */}
+                <div className="pointer-events-none sticky bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/45 to-transparent" />
             </div>
         </div>
     );

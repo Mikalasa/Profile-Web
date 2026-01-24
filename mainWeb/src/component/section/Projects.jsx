@@ -4,14 +4,18 @@ import ProjectIntroduction from "../widgets/ProjectIntroduction.jsx";
 function Projects() {
   return (
       <section id="projects">
-          <div className="layout-container">
-              <div className="projects w-3/4">
-                  <ProjectIntroduction/>
-                  <ProjectCardList/>
+          <div className="layout-container h-screen">
+              <div className="projects w-4/5 h-full flex flex-col">
+                  <div className="shrink-0">
+                      <ProjectIntroduction />
+                  </div>
+
+                  <div className="flex-1 min-h-0 mb-4">
+                      <ProjectCardList />
+                  </div>
               </div>
           </div>
       </section>
-
   );
 }
 

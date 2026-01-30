@@ -7,7 +7,7 @@ import { isMobile } from "react-device-detect";
 
 function Hero() {
     return (
-        <section id='hero' className="hero-container h-lvh layout-container">
+        <section id='hero' className="hero-container h-svh layout-container">
             {isMobile ? <HeroCard_Mobile/> : <HeroCard/>}
             <TheThinkerCanvas/>
             <MouseScrollicon/>

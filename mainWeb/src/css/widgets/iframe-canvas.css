@@ -29,7 +29,7 @@
     position: relative;
     transform: translate(-50%, -50%);
     width: 100vw;
-    height: 100vh;
+    height: 100lvh;
 }
 
 canvas {
@@ -41,7 +41,7 @@ canvas {
     margin-left: auto;
     width: 200px;
     top: 0;
-    height: 100vh;
+    height: 100lvh;
     /*background-color: white;*/
 }
 

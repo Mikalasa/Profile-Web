@@ -1,14 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { customTailwind } from "../../constants/custom-tailwind";
-import { navLinks } from "../../constants/config-web-paragraph";
-import { menu, close } from "../../constants/config-web-paragraph";
-import { AutoScrollContext } from "../../utility/AutoScrollContext";
 
 const Navbar = () => {
-    const [active, setActive] = useState("");
-    const [toggle, setToggle] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const { setIsNavClick } = useContext(AutoScrollContext);
+    const [toggle, setToggle] = useState(false);
 
     // Smooth + performant scroll listener
     useEffect(() => {
@@ -26,18 +21,6 @@ const Navbar = () => {
         onScroll(); // set initial
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
-
-    const handleNavClick = (e, navId, navTitle) => {
-        e.preventDefault();
-        setIsNavClick(true);
-        setActive(navTitle);
-
-        const el = document.getElementById(navId);
-        if (el) el.scrollIntoView({ behavior: "smooth" });
-
-        setTimeout(() => setIsNavClick(false), 2000);
-        if (toggle) setToggle(false); // close mobile menu
-    };
 
     return (
         <nav
@@ -59,10 +42,7 @@ const Navbar = () => {
                         className="navbar-item flex items-center gap-2"
                         onClick={(e) => {
                             e.preventDefault();
-                            setActive("");
-                            setIsNavClick(true);
                             window.scrollTo({ top: 0, behavior: "smooth" });
-                            setTimeout(() => setIsNavClick(false), 500);
                         }}
                     >
                         <p className="text-white text-[18px] font-bold cursor-pointer flex">
@@ -73,66 +53,96 @@ const Navbar = () => {
 
                 {/* Desktop nav */}
                 <ul className="list-none hidden sm:flex flex-row gap-10">
-                    {navLinks.map((nav) => (
-                        <li
-                            key={nav.id}
-                            className="navbar-item hover:text-gray-300 text-white text-[18px] font-medium cursor-pointer"
-                        >
-                            <a href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav.id, nav.title)}>
-                                {nav.title}
-                            </a>
-                        </li>
-                    ))}
+                    <li className="navbar-item hover:text-gray-300 text-white text-[18px] font-medium cursor-pointer">
+                        <a href="https://github.com/Mikalasa" target="_blank" rel="noopener noreferrer">
+                            GitHub
+                        </a>
+                    </li>
+                    <li className="navbar-item hover:text-gray-300 text-white text-[18px] font-medium cursor-pointer">
+                        <a href="https://medium.com/@xingyi-posts" target="_blank" rel="noopener noreferrer">
+                            Medium
+                        </a>
+                    </li>
+                    <li className="navbar-item hover:text-gray-300 text-white text-[18px] font-medium cursor-pointer">
+                        <a href="https://www.behance.net/xingyixxx" target="_blank" rel="noopener noreferrer">
+                            Behance
+                        </a>
+                    </li>
                 </ul>
 
-                {/* Mobile menu button + dropdown */}
-                <div className="sm:hidden flex flex-1 justify-end items-center">
+                {/* Mobile hamburger toggle */}
+                <div className="sm:hidden flex flex-1 justify-end items-center relative">
                     <button
+                        onClick={() => setToggle(!toggle)}
+                        className="text-white text-[24px] font-bold cursor-pointer focus:outline-none"
                         aria-label="Toggle menu"
-                        onClick={() => setToggle((t) => !t)}
-                        className="p-2 rounded-xl active:scale-95 transition"
                     >
-                        <img
-                            src={toggle ? close : menu}
-                            alt="menu"
-                            className="w-[28px] h-[28px] object-contain"
-                        />
+                        {/* Hamburger icon */}
+                        <svg
+                            className="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            {toggle ? (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                />
+                            ) : (
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16"
+                                />
+                            )}
+                        </svg>
                     </button>
 
                     <div
-                        style={{
-                            WebkitBackdropFilter: "saturate(190%) blur(50px)",
-                            backdropFilter: "saturate(190%) blur(50px)",
-                            background: "rgba(16,18,27,0.72)",
-                        }}
                         className={`${
-                            !toggle ? "hidden" : "flex"
-                        } absolute top-20 right-0 z-40 mx-4 my-2 min-w-[200px] flex-col rounded-2xl overflow-hidden glass glass--card ${
-                            scrolled ? "glass--scrolled" : ""
-                        } p-4`}
+                            toggle ? "flex" : "hidden"
+                        } absolute top-20 right-0 flex-col glass glass--card rounded-xl w-40 py-4 shadow-lg z-30`}
                     >
-                        <div
-                            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/65 via-black/55 to-black/45"
-                            aria-hidden="true"
-                        />
-                        <div className="relative z-10">
-                            <ul className="list-none flex flex-col gap-1">
-                                {navLinks.map((nav) => (
-                                    <li
-                                        key={nav.id}
-                                        className={`w-full rounded-xl px-4 py-3 text-[16px] font-semibold tracking-tight transition ${
-                                            active === nav.title
-                                                ? "bg-white/15 text-white"
-                                                : "text-white/85 hover:bg-white/10 hover:text-white"
-                                        }`}
-                                    >
-                                        <a className="block w-full" href={`#${nav.id}`} onClick={(e) => handleNavClick(e, nav.id, nav.title)}>
-                                            {nav.title}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        <ul className="flex flex-col gap-4 px-4">
+                            <li>
+                                <a
+                                    href="https://github.com/Mikalasa"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setToggle(false)}
+                                    className="text-white text-[18px] font-medium cursor-pointer block"
+                                >
+                                    GitHub
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://medium.com/@xingyi-posts"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setToggle(false)}
+                                    className="text-white text-[18px] font-medium cursor-pointer block"
+                                >
+                                    Medium
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="https://www.behance.net/xingyixxx"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setToggle(false)}
+                                    className="text-white text-[18px] font-medium cursor-pointer block"
+                                >
+                                    Behance
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>

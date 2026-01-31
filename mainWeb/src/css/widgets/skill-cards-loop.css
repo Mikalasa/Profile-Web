@@ -40,7 +40,7 @@ looping skill cards animation //迁移到tailwindcss之前的实现
     position: absolute;
     left: 0;
     top: 0;
-    width: 150px;
+    width: 180px;
     height: 100%;
     z-index: 1;
     pointer-events: none;
@@ -60,7 +60,7 @@ looping skill cards animation //迁移到tailwindcss之前的实现
     position: absolute;
     right: 0;
     top: 0;
-    width: 150px;
+    width: 180px;
     height: 100%;
     z-index: 1;
     pointer-events: none;

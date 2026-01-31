@@ -31,11 +31,9 @@ export const IntroductionOverView = {
             className="text-[20px] the-highLight-words">front-end developer</span> and a <span
             className="text-[20px] the-highLight-words">tester</span>.
             <br/>
+            <br/>
             Beyond my <span className="text-[20px] the-highLight-words">core skills</span>
             , I see development not merely as coding, but as a mindset and a path toward the future.
-            <br/>
-            I am now focusing on framework design and AI, exploring how technology can create long-term value.
-            <br/>
         </>
 }
 export const projectOverView = {

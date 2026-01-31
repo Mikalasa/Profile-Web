@@ -24,7 +24,7 @@ function OverviewInfo() {
                 variants={fadeIn("", "", 0.3, 4)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className='mt-4 mb-4 text-[#C0C0C0] text-[17px] max-w-4xl leading-[30px]'
+                className='mt-4 mb-4 text-[#C0C0C0] text-[17px] max-w-4xl leading-[30px] text-justify hyphens-auto'
             >
                 {IntroductionOverView.paragraph}
             </motion.p>

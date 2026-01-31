@@ -41,9 +41,7 @@ export const IntroductionOverView = {
 export const projectOverView = {
     paragraph:
         <>
-            Exploring possibilities through ongoing experimentation,
-
-            building engaging <span
+            Exploring and building engaging <span
             className="text-[20px] the-highLight-words">full-stack</span> and <span
             className="text-[20px] the-highLight-words">AI</span> projects.
         </>

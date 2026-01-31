@@ -104,7 +104,7 @@ export default function ProjectCardList() {
                 <div
                     className="absolute inset-0 rounded-3xl"
                     style={{
-                        boxShadow: "0 0 0 1px rgba(120,180,255,0.35), 0 0 24px rgba(120,180,255,0.35)",
+                        boxShadow: "0 0 0 2px rgba(120,180,255,0.35), 0 0 48px rgba(120,180,255,0.35)",
                     }}
                     aria-hidden="true"
                 />

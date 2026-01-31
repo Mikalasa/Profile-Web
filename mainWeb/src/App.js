@@ -4,6 +4,7 @@ import Navbar from "./component/widgets/Navbar.jsx";
 import MobileWarningModal from "./component/modal/MobileWarningModal.jsx";
 import { AutoScrollContext } from './utility/AutoScrollContext';
 import MainLayout from "./component/layout/MainLayout";
+import { lockMinViewportHeightVar } from "./utility/lockSmallVh";
 
 
 function App() {
@@ -19,6 +20,11 @@ function App() {
         if (isMobile) {
             setShowMobileWarning(true);
         }
+    }, []);
+
+    useEffect(() => {
+        const cleanup = lockMinViewportHeightVar("--app-svh");
+        return cleanup;
     }, []);
 
     return (

@@ -35,7 +35,7 @@ function Flat() {
                 wrapperClass="webgl-iframe-wrapper"
                 distanceFactor={6.2}
             >
-                <div className="iframe-flat-container">
+                <div className="iframe-flat-container h-full">
                     <img
                         ref={imgRef}
                         src={mockupImage}

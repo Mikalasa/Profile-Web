@@ -4,7 +4,7 @@ import SkillCardList from "../widgets/SkillCardList";
 function Overview() {
     return (
         <section id="overview">
-            <div className="layout-container h-svh flex justify-center items-center">
+            <div className="layout-container h-[var(--app-svh)] md:h-svh flex justify-center items-center">
                 <div className="overview-box w-3/4 flex flex-col ">
                     <OverviewInfo />
                     <SkillCardList />

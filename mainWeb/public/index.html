@@ -10,6 +10,12 @@
       content="Web site created using create-react-app"
     />
     <meta property="og:image" content="https://i.imgur.com/ZDvcUVM.png" />
+    <script>
+      (function () {
+        var h = Math.round(window.visualViewport ? window.visualViewport.height : window.innerHeight);
+        document.documentElement.style.setProperty("--app-svh", h + "px");
+      })();
+    </script>
 
 
     <title>%REACT_APP_TITLE%</title>

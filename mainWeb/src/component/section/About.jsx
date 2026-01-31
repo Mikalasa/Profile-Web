@@ -27,7 +27,7 @@ function About() {
         return () => observer.disconnect();
     }, []);
     return (
-        <section id="about" ref={webglPcRef} className="about-container layout-container">
+        <section id="about" ref={webglPcRef} className="about-container layout-container h-[var(--app-svh)] md:h-svh">
             {!isMobile && loadWebglPc ? <WebglPc/> : loadWebglPc && <Flat/>}
         </section>
     );

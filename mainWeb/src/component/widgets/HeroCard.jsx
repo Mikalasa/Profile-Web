@@ -49,12 +49,6 @@ function HeroCard() {
         };
     }, []);
 
-    const isMobileCanvasCoverDiv = (
-        <>
-            <div className="isMobileCanvasCoverDiv-right"></div>
-            <div className="isMobileCanvasCoverDiv-buttom"></div>
-        </>
-    )
 
     return (
         <motion.div
@@ -87,10 +81,6 @@ function HeroCard() {
                     </div>
                 </div>
             </div>
-
-            {isMobile ? (
-                isMobileCanvasCoverDiv
-            ) : null}
         </motion.div>
 
     );

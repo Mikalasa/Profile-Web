@@ -74,7 +74,7 @@ useGLTF.preload(`${process.env.PUBLIC_URL}/pc.glb`);
 // Main WebglPc component
 const WebglPc = () => {
     return (
-        <div className="pc-bg">
+        <div className="pc-bg h-full">
             <Canvas
                 shadows={false}
                 dpr={[1, 1.5]}

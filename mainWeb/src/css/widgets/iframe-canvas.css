@@ -35,15 +35,15 @@ canvas {
     touch-action: pan-y;
 }
 
-.webgl-iframe-windows {
-    position: absolute;
-    transform: translate(-50%, -60%);
-}
+/*.webgl-iframe-windows {*/
+/*    position: absolute;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 
-.webgl-iframe-mac {
-    position: absolute;
-    transform: translate(-50%, -50%);
-}
+/*.webgl-iframe-mac {*/
+/*    position: absolute;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 
 /* mockup image */
 .mockup-image {

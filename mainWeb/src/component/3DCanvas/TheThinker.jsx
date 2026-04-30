@@ -1,7 +1,7 @@
 // TheThinkerCanvas.jsx
 
 import React, { Suspense, useEffect, useMemo, memo } from "react";
-import {Canvas, useFrame, useLoader} from "@react-three/fiber";
+import {Canvas, useLoader, useThree} from "@react-three/fiber";
 import { Float, OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import { TextureLoader } from "three";
 import CanvasLoader from "../widgets/CanvasLoader.jsx";
@@ -46,7 +46,7 @@ const ThinkerModel = memo(() => {
                 });
             }
         };
-    }, [scene]);
+    }, [scene, enableShadows]);
 
     return (
         <>
@@ -57,8 +57,8 @@ const ThinkerModel = memo(() => {
                 position={[-1, 5, 7]}
                 color="#FFEED6"
                 castShadow={enableShadows}
-                shadow-mapSize-width={1024}
-                shadow-mapSize-height={1024}
+                shadow-mapSize-width={512}
+                shadow-mapSize-height={512}
                 shadow-radius={10}
             />
             <pointLight
@@ -66,8 +66,8 @@ const ThinkerModel = memo(() => {
                 position={[-8, 6, -3]}
                 color="#CFE3FF"
                 castShadow={enableShadows}
-                shadow-mapSize-width={1024}
-                shadow-mapSize-height={1024}
+                shadow-mapSize-width={512}
+                shadow-mapSize-height={512}
                 shadow-radius={10}
             />
             <pointLight
@@ -75,8 +75,8 @@ const ThinkerModel = memo(() => {
                 position={[-8, 6, -3]}
                 color="#B5D9FF"
                 // castShadow
-                shadow-mapSize-width={1024}
-                shadow-mapSize-height={1024}
+                shadow-mapSize-width={512}
+                shadow-mapSize-height={512}
                 shadow-radius={10}
             />
 
@@ -109,19 +109,22 @@ const GroundPlane = memo(() => {
     );
 });
 
-const DynamicFrameControl = ({ children }) => {
-    const fps = 30; // Target frame rate
-    let accumDelta = 0;
+const DynamicFrameControl = ({ fps = 30 }) => {
+    const invalidate = useThree((state) => state.invalidate);
 
-    useFrame((state, delta) => {
-        accumDelta += delta;
-        if (accumDelta >= 1 / fps) {
-            accumDelta %= 1 / fps; // Reset accumulated time
-            state.invalidate(); // Request a new frame
-        }
-    });
+    useEffect(() => {
+        const interval = window.setInterval(() => {
+            if (!document.hidden) {
+                invalidate();
+            }
+        }, 1000 / fps);
 
-    return <>{children}</>;
+        invalidate();
+
+        return () => window.clearInterval(interval);
+    }, [fps, invalidate]);
+
+    return null;
 };
 
 const TheThinkerCanvas = () => {
@@ -133,6 +136,7 @@ const TheThinkerCanvas = () => {
     return (
         <div className="thinker-bg">
             <Canvas
+                frameloop="demand"
                 shadows={!isMobile}
                 dpr={[1, 2]} // Limit device pixel ratio for performance
                 camera={{ position: isMobile ? [0, 15, 26] : [0, 30, 0], fov: 25, near: 0.1, far: 200 }}
@@ -145,20 +149,19 @@ const TheThinkerCanvas = () => {
                 gl={{ antialias: true, alpha: false }}
             >
                 <Suspense fallback={<CanvasLoader />}>
-                    <DynamicFrameControl>
-                        {!isMobile && (
-                            <OrbitControls
-                                enableRotate={true}
-                                enableZoom={false}
-                                maxPolarAngle={maxPolarAngle}
-                                minPolarAngle={minPolarAngle}
-                                minAzimuthAngle={minAzimuthAngle}
-                                maxAzimuthAngle={maxAzimuthAngle}
-                            />
-                        )}
-                        <ThinkerModel />
-                        <GroundPlane />
-                    </DynamicFrameControl>
+                    <DynamicFrameControl fps={30} />
+                    {!isMobile && (
+                        <OrbitControls
+                            enableRotate={true}
+                            enableZoom={false}
+                            maxPolarAngle={maxPolarAngle}
+                            minPolarAngle={minPolarAngle}
+                            minAzimuthAngle={minAzimuthAngle}
+                            maxAzimuthAngle={maxAzimuthAngle}
+                        />
+                    )}
+                    <ThinkerModel />
+                    <GroundPlane />
                 </Suspense>
                 <Preload all />
             </Canvas>

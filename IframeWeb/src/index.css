@@ -12,10 +12,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.LayoutGridDemo {
-    margin: 0 auto;
-}
-
 .contact-box {
     height: 100vh;
     width: 100vw;

@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Html, Preload, PresentationControls, useGLTF, PerformanceMonitor } from '@react-three/drei';
+import { Html, PresentationControls, useGLTF, PerformanceMonitor } from '@react-three/drei';
 import CanvasLoader from "../widgets/CanvasLoader.jsx";
 
 // Custom hook to detect the user's operating system
@@ -19,6 +19,7 @@ const useOperatingSystem = () => {
 // Memoized MacModel component
 const MacModel = React.memo(() => {
     const { scene } = useGLTF(`${process.env.PUBLIC_URL}/3DModel/pc-bake.glb`);
+    const [loadIframe, setLoadIframe] = React.useState(false);
 
     // Memoized positions and rotations
     const modelPosition = useMemo(() => [3, -3.0, 2.5], []);
@@ -36,6 +37,25 @@ const MacModel = React.memo(() => {
         });
     }, [scene]);
 
+    useEffect(() => {
+        let idleId;
+        const delayId = window.setTimeout(() => {
+            const showIframe = () => setLoadIframe(true);
+
+            if ("requestIdleCallback" in window) {
+                idleId = window.requestIdleCallback(showIframe, { timeout: 1200 });
+            } else {
+                showIframe();
+            }
+        }, 900);
+
+        return () => {
+            window.clearTimeout(delayId);
+            if (idleId && "cancelIdleCallback" in window) {
+                window.cancelIdleCallback(idleId);
+            }
+        };
+    }, []);
 
     return (
         <>
@@ -55,27 +75,28 @@ const MacModel = React.memo(() => {
                     distanceFactor={1.70}
                     occlude
                 >
-                    <iframe
-                        title="iframe-pc"
-                        className={`webgl-iframe webgl-iframe-${os}`}
-                        sandbox="allow-scripts allow-same-origin"
-                        loading="lazy"
-                        src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
-                    />
+                    {loadIframe && (
+                        <iframe
+                            title="iframe-pc"
+                            className={`webgl-iframe webgl-iframe-${os}`}
+                            sandbox="allow-scripts allow-same-origin"
+                            loading="lazy"
+                            src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
+                        />
+                    )}
                 </Html>
             </group>
         </>
     );
 });
 
-// Preload the GLTF model to improve loading times
-useGLTF.preload(`${process.env.PUBLIC_URL}/pc.glb`);
 
 // Main WebglPc component
 const WebglPc = () => {
     return (
         <div className="pc-bg h-full">
             <Canvas
+                frameloop="demand"
                 shadows={false}
                 dpr={[1, 1.5]}
                 camera={{ position: [0, 0, 15], fov: 25 }}
@@ -96,9 +117,6 @@ const WebglPc = () => {
                         <MacModel />
                     </PresentationControls>
                 </Suspense>
-
-                {/* Preload all assets */}
-                <Preload all />
             </Canvas>
         </div>
     );

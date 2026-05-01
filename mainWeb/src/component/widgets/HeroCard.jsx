@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { motion } from 'framer-motion';
 import {customTailwind} from "../../constants/custom-tailwind";
-import {isMobile} from "react-device-detect";
 import {heroText} from "../../constants/config-web-paragraph";
 
 
@@ -53,10 +52,10 @@ function HeroCard() {
     return (
         <motion.div
             id="hero-card-bg"
-            className={` ${customTailwind.paddingX} flex flex-row items-start gap-5`}
-            initial={{opacity: 0, scale: 0.5}}
+            className={`${customTailwind.paddingX} flex flex-row items-start gap-5`}
+            initial={{opacity: 0, y: 28, scale: 0.96}}
             animate={{opacity: 1, scale: 1}}
-            transition={{duration: 5, type: 'spring', damping: 10, stiffness: 100}}
+            transition={{duration: 1.4, type: 'spring', damping: 14, stiffness: 90}}
         >
             <div>
                 <div id="hero-card-top">
@@ -65,17 +64,17 @@ function HeroCard() {
                         ref={cardRef}
                     >
                         <div className="hero-card-thumb"></div>
-                        <div className='hero-card-title flex flex-col justify-center items-center mt-5'>
+                        <div className="hero-card-title flex flex-col justify-center items-center mt-5">
                             <div className='w-5 h-5 rounded-full bg-[#FF7F50]'/>
                             <div className='w-1 sm:h-80 h-40 violet-gradient'/>
                         </div>
-                        <motion.div className={"hero-card-des"}>
+                        <motion.div className="hero-card-des">
+                            <p className="hero-card-eyebrow">Creative Developer</p>
                             <h1 className={`${customTailwind.heroHeadText} text-white`}>{heroText.title_f}
                                 <span className='text-[#FF7F50]'>{heroText.title_l}</span>
                             </h1>
-                            <br/>
-                            <p className={`${customTailwind.heroSubText} mt-2 text-white-50`}>
-                                {heroText.description}
+                            <p className={`${customTailwind.heroSubText} hero-card-subtitle`}>
+
                             </p>
                         </motion.div>
                     </div>

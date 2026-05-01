@@ -7,11 +7,16 @@ const Overview = lazy(() => import("../section/Overview.jsx"));
 const Projects = lazy(() => import("../section/Projects.jsx"));
 const About = lazy(() => import("../section/About.jsx"));
 
+const AutoHero = withAutoScroll(Hero);
+const AutoOverview = withAutoScroll(Overview);
+const AutoProjects = withAutoScroll(Projects);
+const AutoAbout = withAutoScroll(About);
+
 function MainLayout() {
-    const HeroComponent = isMobile ? Hero : withAutoScroll(Hero);
-    const OverviewComponent = isMobile ? Overview : withAutoScroll(Overview);
-    const ProjectsComponent = isMobile ? Projects : withAutoScroll(Projects);
-    const AboutComponent = isMobile ? About : withAutoScroll(About);
+    const HeroComponent = isMobile ? Hero : AutoHero;
+    const OverviewComponent = isMobile ? Overview : AutoOverview;
+    const ProjectsComponent = isMobile ? Projects : AutoProjects;
+    const AboutComponent = isMobile ? About : AutoAbout;
 
     return (
         <>

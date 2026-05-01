@@ -4,9 +4,6 @@ import Flat from "../3DCanvas/Flat.jsx";
 import {useEffect, useRef, useState} from "react";
 
 function About() {
-    useEffect(() => {
-        setTimeout(() => window.scrollTo(0, 0), 100);
-    }, []);
     const [loadWebglPc, setLoadWebglPc] = useState(false);
     const webglPcRef = useRef(null);
 

@@ -1,6 +1,143 @@
 /*
 looping skill cards animation //迁移到tailwindcss之前的实现
 */
+.overview-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.overview-section::before {
+    content: '';
+    position: absolute;
+    inset: 12% 0 auto auto;
+    width: 46vw;
+    height: 46vw;
+    max-width: 620px;
+    max-height: 620px;
+    background:
+            radial-gradient(circle, rgba(56, 189, 248, 0.14), transparent 60%),
+            radial-gradient(circle at 30% 70%, rgba(255, 127, 80, 0.12), transparent 52%);
+    filter: blur(18px);
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.overview-info-container {
+    position: relative;
+    z-index: 2;
+}
+
+.overview-eyebrow {
+    margin-bottom: 0.75rem;
+    color: #FF7F50;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.overview-heading.gradient-title-text {
+    font-size: clamp(3rem, 7vw, 5rem);
+    line-height: 0.95;
+}
+
+.overview-copy {
+    margin-top: 1.35rem;
+    max-width: 34rem;
+    color: #C0C0C0;
+    font-size: 1.06rem;
+    line-height: 1.85;
+}
+
+.overview-interest-block {
+    max-width: 34rem;
+    margin-top: 2.1rem;
+    border-left: 1px solid rgba(255, 127, 80, 0.7);
+    padding-left: 1rem;
+}
+
+.overview-interest-label {
+    color: #FFB199;
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.overview-interest-copy {
+    margin-top: 0.55rem;
+    color: #F4F4F5;
+    font-size: clamp(1.08rem, 1.7vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.overview-skill-panel {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: 24px;
+    padding: 1.35rem 0 1.15rem;
+    background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(6, 10, 18, 0.9)),
+            radial-gradient(circle at 12% 12%, rgba(255, 127, 80, 0.14), transparent 36%),
+            radial-gradient(circle at 90% 24%, rgba(56, 189, 248, 0.14), transparent 34%);
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    box-shadow:
+            0 22px 70px rgba(0, 0, 0, 0.48),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06),
+            0 0 0 1px rgba(96, 165, 250, 0.16);
+}
+
+.overview-skill-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.75;
+}
+
+.overview-skill-panel-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 1.35rem 1rem;
+}
+
+.overview-skill-panel-header p {
+    color: #FFB199;
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.overview-skill-panel-header h3 {
+    margin-top: 0.35rem;
+    color: #ffffff;
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    font-weight: 850;
+    line-height: 1.05;
+}
+
+.skill-loop-stack {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 0.35rem 0;
+}
+
 .skill-loop-container {
     border-radius: 1rem;
     display: flex;
@@ -14,66 +151,54 @@ looping skill cards animation //迁移到tailwindcss之前的实现
     align-items: center;
     margin-top: 0 !important;
     will-change: transform;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 
 .skill-card {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow:  0 2px 4px -2px rgb(0 0 0 / 0.1);
-    width: 60px;
-    height: 60px;
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.075);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 0.9rem;
+    box-shadow:
+            0 12px 22px rgba(0, 0, 0, 0.26),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    width: 62px;
+    height: 62px;
     margin-right: 16px;
     font-size: 14px;
     text-align: center;
-    img {
-        width: 50px;
-        height: 50px;
-    }
 }
 
+.skill-card img {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.28));
+}
 
 .skill-loop-box::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 180px;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-            to right,
-            rgba(18, 18, 18, 1),
-            rgba(18, 18, 18, 0.7) 25%,
-            rgba(18, 18, 18, 0.4) 50%,
-            rgba(18, 18, 18, 0.2) 75%,
-            rgba(18, 18, 18, 0) 100%
-    );
-    backdrop-filter: blur(1px);
+    display: none;
 }
 
 .skill-loop-box::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 180px;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-            to left,
-            rgba(18, 18, 18, 1),
-            rgba(18, 18, 18, 0.7) 25%,
-            rgba(18, 18, 18, 0.4) 50%,
-            rgba(18, 18, 18, 0.2) 75%,
-            rgba(18, 18, 18, 0) 100%
-    );
-    backdrop-filter: blur(1px);
+    display: none;
 }
 
+@media (max-width: 767px) {
+    .overview-skill-panel {
+        border-radius: 18px;
+    }
 
+    .overview-skill-panel-header {
+        padding-inline: 1rem;
+    }
 
+    .skill-loop-box::before,
+    .skill-loop-box::after {
+        width: 72px;
+    }
+}

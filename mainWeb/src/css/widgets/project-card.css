@@ -1,31 +1,59 @@
+.project-card-shell {
+    position: relative;
+    z-index: 1;
+}
+
+.project-card-shell:hover,
+.project-card-shell-active {
+    z-index: 40;
+}
+
+.project-card-shell .Tilt {
+    position: relative;
+    z-index: inherit;
+}
+
 .project-card {
     width: 100%;
-    height: 20rem;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    opacity: 0.95;
-    border-radius: 15px;
-    padding: 15px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.8));
+    min-height: 23rem;
+    display: grid;
+    grid-template-rows: 4.35rem minmax(0, 1fr) 4.35rem;
+    gap: 0.9rem;
+    border-radius: 14px;
+    padding: 18px;
+    background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(6, 10, 18, 0.92)),
+            radial-gradient(circle at 18% 0%, rgba(255, 127, 80, 0.18), transparent 34%),
+            radial-gradient(circle at 100% 10%, rgba(125, 211, 252, 0.16), transparent 30%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow:
-            0 5px 15px rgba(0, 0, 0, 0.5),
-            0 2px 3px rgba(255, 255, 255, 0.1),
-            0 2px 5px rgba(58, 123, 253, 0.6) !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
+            0 18px 38px rgba(0, 0, 0, 0.42),
+            inset 0 1px 0 rgba(255, 255, 255, 0.06),
+            0 0 0 1px rgba(96, 165, 250, 0.18) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    overflow: visible;
     z-index: 1;
     position: relative;
+}
+
+.project-card:hover {
+    border-color: rgba(255, 127, 80, 0.38);
+    box-shadow:
+            0 22px 46px rgba(0, 0, 0, 0.55),
+            inset 0 1px 0 rgba(255, 255, 255, 0.08),
+            0 0 0 1px rgba(255, 127, 80, 0.25),
+            0 0 32px rgba(56, 189, 248, 0.18) !important;
 }
 
 .project-card::before {
     content: '';
     position: absolute;
-    inset: -30px;
-    border-radius: 15px;
+    inset: 0;
+    border-radius: 14px;
     z-index: 0;
     /* Star pattern */
-    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-    background-size: 15px 15px;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 18px 18px;
     /* GPU-friendly movement */
     transform: translate3d(0, 0, 0);
     will-change: transform;
@@ -41,29 +69,64 @@
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: 15px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+    border-radius: 14px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.12));
     z-index: 2;
     pointer-events: none;
 }
 .project-card:hover .project-cover {
-    transform: scale(1.2);
+    transform: scale(1.065);
 }
 
 .project-card-title-box {
-    height: 10%;
+    position: relative;
+    z-index: 3;
+    min-height: 0;
+}
+
+.project-card-meta {
+    margin-top: 0.45rem;
+    color: #FFB199;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    opacity: 0.82;
+}
+
+.project-card-title {
+    color: #ffffff;
+    font-size: clamp(1.15rem, 1.35vw, 1.38rem);
+    font-weight: 800;
+    line-height: 1.12;
+    overflow-wrap: anywhere;
 }
 
 .project-img-box {
+    z-index: 3;
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: 0.7rem;
     position: relative;
-    box-shadow: 0 10px 15px rgb(0, 0, 0);
+    min-height: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.42);
 }
 .project-tag-box {
-    height: 25%;
-    padding-top: 1rem;
+    position: relative;
+    z-index: 6;
+    max-height: 4.35rem;
+    display: block;
+    overflow: visible;
+}
+
+.project-tech-list {
     display: flex;
+    max-height: 4.1rem;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    overflow: hidden;
 }
 .project-text-box {
     padding: 0.5rem;
@@ -71,19 +134,46 @@
 }
 
 .project-cover {
-    height: auto;
-    transition: transform 1s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
 }
 
 .github-icon {
-    width: 2rem;
-    height: 2rem;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 4;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 999px;
+    background: rgba(8, 12, 20, 0.72);
+    padding: 0.24rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.project-tech-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.55rem;
+    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #D7DCE8;
+    font-size: 0.7rem;
+    font-weight: 650;
+    line-height: 1;
 }
 @keyframes stars-move {
     0% {
         transform: translate3d(0, 0, 0);
     }
     100% {
-        transform: translate3d(50px, 50px, 0);
+        transform: translate3d(36px, 36px, 0);
     }
 }

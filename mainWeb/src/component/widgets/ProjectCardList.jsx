@@ -9,6 +9,8 @@ const DesktopTilt = React.lazy(() =>
 // ---------------------- ProjectCard component stays the same ----------------------
 const ProjectCard = React.memo(({ project, custom }) => {
     const [isTiltActive, setIsTiltActive] = React.useState(false);
+    const projectTypeText = project.type.join(" / ");
+
     const openSite = React.useCallback(() => {
         window.open(project.url, "_blank", "noopener,noreferrer");
     }, [project.url]);
@@ -20,55 +22,51 @@ const ProjectCard = React.memo(({ project, custom }) => {
 
     const card = (
         <motion.div
-            className="project-card shadow-lg flex flex-col justify-between relative cursor-pointer transform-gpu will-change-transform"
+            className="project-card shadow-lg relative cursor-pointer transform-gpu will-change-transform"
             onClick={openSite}
         >
-            <div className='project-card-title-box flex justify-between items-center'>
-                <h3 className='text-white font-bold text-[20px]'>{project.title}</h3>
+            <div className='project-card-title-box'>
+                <div className="min-w-0">
+                    <h3 className='project-card-title'>{project.title}</h3>
+                    <p className="project-card-meta">{projectTypeText}</p>
+                </div>
+            </div>
+            <div className="project-img-box relative flex items-center">
                 <motion.img
                     src={process.env.PUBLIC_URL + '/socialIcon/github-mark.png'}
-                    className="github-icon z-10 will-change-transform transform-gpu"
+                    className="github-icon will-change-transform transform-gpu"
                     whileHover={isMobile ? undefined : { scale: 1.1 }}
                     transition={{ duration: 0.25 }}
                     onClick={openRepo}
                 />
-            </div>
-            <div className="project-img-box mt-4 z-10 relative flex items-center">
                 <img
                     src={process.env.PUBLIC_URL + project.imageURL}
-                    alt={`${project.title} image`}
+                    alt={project.title}
                     className="project-cover"
                     loading="lazy"
                     decoding="async"
                     width={560}
                     height={315}
                 />
-                <div className="absolute bottom-2 right-2 flex flex-wrap gap-1">
-                    {project.type.map((tag, index) => (
-                        <div
-                            key={index}
-                            className="bg-black bg-opacity-40 text-white text-[11px] px-2 py-1 rounded"
-                        >
-                            {tag}
-                        </div>
-                    ))}
-                </div>
             </div>
             <div className='project-tag-box flex-wrap gap-2'>
-                {project.techStack.map((tag, index) => (
-                    <p
-                        key={index}
-                        className={`text-[12px] ${tag + '-tag'} p-1 tech-stack-tag`}
-                    >
-                        {tag}
-                    </p>
-                ))}
+                <div className="project-tech-list">
+                    {project.techStack.map((tag) => (
+                        <span
+                            key={tag}
+                            className="project-tech-chip"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
             </div>
         </motion.div>
     )
 
     return (
         <div
+            className={`project-card-shell ${isTiltActive ? "project-card-shell-active" : ""}`}
             onMouseEnter={!isMobile ? () => setIsTiltActive(true) : undefined}
             onMouseLeave={!isMobile ? () => setIsTiltActive(false) : undefined}
         >
@@ -79,8 +77,9 @@ const ProjectCard = React.memo(({ project, custom }) => {
                     <DesktopTilt
                         className="Tilt"
                         options={{
-                            max: 10,
+                            max: 5,
                             perspective: 1000,
+                            scale: 1.05,
                             easing: "cubic-bezier(.03,.98,.52,.99)",
                             transition: true
                         }}
@@ -98,7 +97,7 @@ const ProjectCard = React.memo(({ project, custom }) => {
 export default function ProjectCardList() {
     return (
         // This container fills the remaining height of the Projects section.
-        <div className="relative h-full w-full max-w-7xl mx-auto p-2">
+        <div className="relative h-full w-full mx-auto">
             <div className="absolute inset-0 rounded-3xl pointer-events-none">
                 {/* Edge glow (border-only) */}
                 <div
@@ -118,8 +117,8 @@ export default function ProjectCardList() {
             </div>
 
             {/* Inner scroll area */}
-            <div className="relative z-10 h-full overflow-y-auto overscroll-contain px-2 sm:px-6 py-6 projectcardlist-scroll">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-items-center px-2">
+            <div className="absolute inset-3 z-10 overflow-y-auto overscroll-contain px-3 sm:px-5 py-4 projectcardlist-scroll">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 justify-items-stretch">
                     {projects.map((project, index) => (
                         <ProjectCard
                             key={project.id || index}

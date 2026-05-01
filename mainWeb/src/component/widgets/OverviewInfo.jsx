@@ -10,13 +10,16 @@ function OverviewInfo() {
         rootMargin: "-100px 0px",
     });
     return (
-        <div className="overview-info-container">
+        <aside className="overview-info-container">
             <motion.div
                 ref={ref}
                 variants={textVariant(0)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}>
-                <h2 className={customTailwind.sectionHeadText + " mt-10 sm:mt-5 py-5 sm:py-1 gradient-title-text"}>Overview</h2>
+                <p className="overview-eyebrow">
+                    Profile Snapshot
+                </p>
+                <h2 className={customTailwind.sectionHeadText + " overview-heading gradient-title-text"}>Overview</h2>
             </motion.div>
 
             <motion.p
@@ -24,11 +27,23 @@ function OverviewInfo() {
                 variants={fadeIn("", "", 0.3, 4)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className='mt-4 mb-4 text-[#C0C0C0] text-[17px] max-w-4xl leading-[30px] text-justify hyphens-auto'
+                className='overview-copy'
             >
                 {IntroductionOverView.paragraph}
             </motion.p>
-        </div>
+
+            <motion.div
+                variants={fadeIn("", "", 0.55, 2)}
+                initial="hidden"
+                animate={inView ? "show" : "hidden"}
+                className="overview-interest-block"
+            >
+                <p className="overview-interest-label">Currently drawn to</p>
+                <p className="overview-interest-copy">
+                    AI development, framework design, and visual motion.
+                </p>
+            </motion.div>
+        </aside>
     );
 }
 

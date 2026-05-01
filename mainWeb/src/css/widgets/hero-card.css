@@ -15,6 +15,7 @@
 }
 
 .hero-card {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,48 +25,76 @@
     box-shadow: 0 70px 63px -60px #494848;
     transform-style: preserve-3d;
     transition: transform .05s linear;
-
-    .hero-card-thumb {
-        background: url('../../assets/heroimage.png') no-repeat left;
-        background-size: cover;
-        height: 100%;
-        width: 100%;
-        border-radius: 15px;
-        border-color: rgba(99, 105, 129, 0.35);
-        border-width: 1px;
-        &:after {
-            background: inherit;
-            content: '';
-            display: block;
-            position: absolute;
-            left: -60px;
-            top: 40px;
-            width: 100%;
-            height: 108%;
-            z-index: -1;
-            filter: blur(55px);
-        }
-    }
-
-    .hero-card-title {
-        position: absolute;
-        left: -60px;
-        transform: translateZ(80px);
-    }
-
-    .hero-card-des {
-        position: absolute;
-        bottom: 40px;
-        transform: translateZ(35px);
-        padding: 1rem;
-
-        user-select: none; /* 禁止选择 */
-        -webkit-user-select: none; /* 兼容 Safari */
-        -moz-user-select: none; /* 兼容 Firefox */
-        -ms-user-select: none; /* 兼容旧版 IE */
-    }
 }
 
+.hero-card-thumb {
+    background: url('../../assets/heroimage.png') no-repeat left;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.1),
+            0 0 0 1px rgba(96, 165, 250, 0.14);
+}
+
+.hero-card-thumb::after {
+    background: inherit;
+    content: '';
+    display: block;
+    position: absolute;
+    left: -60px;
+    top: 40px;
+    width: 100%;
+    height: 108%;
+    z-index: -1;
+    filter: blur(55px);
+    opacity: 0.74;
+}
+
+.hero-card-title {
+    position: absolute;
+    left: -60px;
+    transform: translateZ(80px);
+}
+
+.hero-card-des {
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    bottom: 2rem;
+    transform: translateZ(35px);
+    padding: 1.25rem 1.35rem;
+    border-radius: 18px;
+    background:
+            linear-gradient(145deg, rgba(8, 12, 20, 0.34), rgba(8, 12, 20, 0.14)),
+            radial-gradient(circle at 0% 0%, rgba(255, 127, 80, 0.12), transparent 45%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(4px) saturate(120%);
+    -webkit-backdrop-filter: blur(4px) saturate(120%);
+
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.hero-card-eyebrow {
+    margin-bottom: 0.35rem;
+    color: #FFB199;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.hero-card-subtitle {
+    margin-top: 0.3rem;
+    color: rgba(255, 255, 255, 0.82);
+}
 
 #hero-card-bg-mobile {
     position: absolute;
@@ -79,13 +108,11 @@
 
 .hero-card-mobile {
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: 100%;
-    height: 200px;
+    min-height: 220px;
     padding: 1rem;
     background: linear-gradient(
             135deg,
@@ -94,32 +121,31 @@
     );
     backdrop-filter: blur(2px) saturate(140%);
     -webkit-backdrop-filter: blur(2px) saturate(140%);
-
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.25);
-
     box-shadow:
             0 70px 63px -60px rgba(0, 0, 0, 0.55),
             inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
     overflow: hidden;
 }
+
 .hero-card-mobile::before {
     content: "";
     position: absolute;
     inset: 0;
-
     background: linear-gradient(
             120deg,
             rgba(255, 255, 255, 0.35),
             rgba(255, 255, 255, 0.05),
             rgba(255, 255, 255, 0.2)
     );
-
     opacity: 0.1;
     mix-blend-mode: overlay;
-
     pointer-events: none;
+}
+
+.hero-card-mobile .hero-card-eyebrow {
+    margin-bottom: 0.45rem;
 }
 
 .violet-gradient {
@@ -130,5 +156,4 @@
             #FF7F50 0%,
             rgba(60, 51, 80, 0) 100%
     );
-
 }

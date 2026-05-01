@@ -13,7 +13,7 @@ export const projects = [
         url: 'https://mikalasa.github.io/cryption-app/CaesarCipher/Encryption',
         repo: 'https://github.com/Mikalasa/enctryption-and-decryption-webapp',
         type: ["Full-Stack", "Web App"],
-        techStack: ["React", "Sass", "TailwindCSS", "NodeJS", "ExpressJS", "RESTAPI", "MySQL", "Vercel"],
+        techStack: ["React", "ExpressJS", "MySQL", "RESTAPI", "Vercel"],
     },
     {
         title: "MineSweeper",
@@ -30,13 +30,5 @@ export const projects = [
         repo: 'https://github.com/Mikalasa/Flippy-biard',
         type: ["Web Game"],
         techStack: ["JavaScript", "HTML", "CSS"],
-    },
-    {
-        title: "Travel Webpage",
-        imageURL: "/projectThumbnail/travelWeb.png",
-        url: 'https://mikalasa.github.io/nz-travel-web/?#',
-        repo: 'https://github.com/Mikalasa/nz-travel-web',
-        type: ["Web Page"],
-        techStack: ["React", "TailwindCSS"],
     },
 ]

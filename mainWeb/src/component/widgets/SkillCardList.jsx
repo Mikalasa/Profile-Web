@@ -4,11 +4,12 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 
 // SkillCard 组件
 const SkillCard = ({ skill }) => (
-    <div className="flex justify-center items-center bg-white rounded-[1rem] shadow-md w-[60px] h-[60px] mr-4 text-sm text-center">
+    <div className="skill-card">
         <img
             src={process.env.PUBLIC_URL + skill.logoURL}
-            alt={skill.name}
-            className="w-[50px] h-[50px]"
+            alt={skill.title}
+            loading="lazy"
+            decoding="async"
         />
     </div>
 );
@@ -92,7 +93,7 @@ const InfiniteScrollRow = ({ skills, speed }) => {
                     const len = skills.length || 1;
                     const cycleIndex = Math.floor(index / len);
                     const posIndex = index % len;
-                    const key = `${skill.name}-${cycleIndex}-${posIndex}`;
+                    const key = `${skill.title}-${cycleIndex}-${posIndex}`;
                     return <SkillCard key={key} skill={skill} />;
                 })}
             </motion.div>
@@ -133,12 +134,19 @@ const SkillCardList = () => {
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
             variants={fadeInVariants}
+            className="overview-skill-panel"
         >
-            <div
-                className="mt-4 flex flex-col space-y-4 mx-auto min-w-[300px] w-full sm:max-w-[300px] md:max-w-[500px] lg:max-w-[700px] xl:max-w-[1000px]">
-                <InfiniteScrollRow skills={row1} speed={moveToLeft}/>
-                <InfiniteScrollRow skills={row2} speed={moveToRight}/>
-                <InfiniteScrollRow skills={row3} speed={moveToLeft}/>
+            <div className="overview-skill-panel-header">
+                <div>
+                    <p>Technical Stack</p>
+                    <h3>Tools I Build With</h3>
+                </div>
+            </div>
+
+            <div className="skill-loop-stack">
+                <InfiniteScrollRow skills={row1} speed={moveToLeft} />
+                <InfiniteScrollRow skills={row2} speed={moveToRight} />
+                <InfiniteScrollRow skills={row3} speed={moveToLeft} />
             </div>
         </motion.div>
 

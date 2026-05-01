@@ -189,16 +189,80 @@ looping skill cards animation //迁移到tailwindcss之前的实现
 }
 
 @media (max-width: 767px) {
+    .overview-eyebrow {
+        margin-bottom: 0.55rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+    }
+
+    .overview-heading.gradient-title-text {
+        font-size: clamp(2.65rem, 14vw, 3.5rem);
+        line-height: 0.96;
+    }
+
+    .overview-copy {
+        margin-top: 1rem;
+        max-width: none;
+        font-size: 0.98rem;
+        line-height: 1.65;
+    }
+
+    .overview-interest-block {
+        margin-top: 1.45rem;
+        padding-left: 0.75rem;
+    }
+
+    .overview-interest-label {
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+    }
+
+    .overview-interest-copy {
+        margin-top: 0.45rem;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
     .overview-skill-panel {
         border-radius: 18px;
+        padding-block: 1rem;
     }
 
     .overview-skill-panel-header {
         padding-inline: 1rem;
     }
 
+    .skill-loop-stack {
+        gap: 0.6rem;
+    }
+
+    .skill-loop-box {
+        height: 4.5rem;
+    }
+
+    .skill-card {
+        width: 54px;
+        height: 54px;
+        margin-right: 12px;
+    }
+
+    .skill-card img {
+        width: 36px;
+        height: 36px;
+    }
+
     .skill-loop-box::before,
     .skill-loop-box::after {
         width: 72px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .overview-copy {
+        max-width: 44rem;
+    }
+
+    .overview-interest-block {
+        max-width: 44rem;
     }
 }

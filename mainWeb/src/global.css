@@ -1,13 +1,23 @@
 .App {
     position: relative;
     width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
 }
 body {
     background: #121212;
+    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
+section {
+    scroll-margin-top: 5.25rem;
 }
 
 .custom-drop-down-menu {

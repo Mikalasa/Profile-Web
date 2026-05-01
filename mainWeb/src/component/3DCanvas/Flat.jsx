@@ -1,26 +1,47 @@
-import {Html} from "@react-three/drei";
-import {Canvas} from "@react-three/fiber";
 import React, {useEffect, useRef, useState} from "react";
+import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
 function Flat() {
-    const mockupImage = process.env.PUBLIC_URL + '/3DTexture/mockup_iphone.png';
+    const useTabletMockup = useResponsiveViewport("(min-width: 768px) and (max-width: 1024px)");
+    const mockupImage = process.env.PUBLIC_URL + (
+        useTabletMockup
+            ? '/3DTexture/mockup_ipad.png'
+            : '/3DTexture/mockup_iphone.png'
+    );
+    const deviceClassName = useTabletMockup ? "device-mockup-tablet" : "device-mockup-phone";
+    const iframeClassName = useTabletMockup ? "webgl-iframe-flat webgl-iframe-tablet" : "webgl-iframe-flat";
     const imgRef = useRef(null);
-    const [iframeHeight, setIframeHeight] = useState(0);
+    const [iframeSize, setIframeSize] = useState({ width: 0, height: 0 });
     const [loadIframe, setLoadIframe] = useState(false);
 
     useEffect(() => {
-        function updateIframeHeight() {
+        setIframeSize({ width: 0, height: 0 });
+    }, [mockupImage]);
+
+    useEffect(() => {
+        function updateIframeSize() {
             if (imgRef.current) {
                 const imgHeight = imgRef.current.clientHeight;
-                setIframeHeight(imgHeight * 0.95);
+                const imgWidth = imgRef.current.clientWidth;
+                setIframeSize({
+                    width: imgWidth * (useTabletMockup ? 0.91 : 0.88),
+                    height: imgHeight * (useTabletMockup ? 0.88 : 0.95),
+                });
             }
         }
 
-        window.addEventListener('resize', updateIframeHeight);
+        const resizeObserver = new ResizeObserver(updateIframeSize);
+        if (imgRef.current) {
+            resizeObserver.observe(imgRef.current);
+        }
+
+        window.addEventListener('resize', updateIframeSize);
+        updateIframeSize();
         return () => {
-            window.removeEventListener('resize', updateIframeHeight);
+            resizeObserver.disconnect();
+            window.removeEventListener('resize', updateIframeSize);
         };
-    }, []);
+    }, [useTabletMockup]);
 
     useEffect(() => {
         let idleId;
@@ -45,37 +66,41 @@ function Flat() {
     function handleImageLoad() {
         if (imgRef.current) {
             const imgHeight = imgRef.current.clientHeight;
-            setIframeHeight(imgHeight * 0.95);
+            const imgWidth = imgRef.current.clientWidth;
+            setIframeSize({
+                width: imgWidth * (useTabletMockup ? 0.91 : 0.88),
+                height: imgHeight * (useTabletMockup ? 0.88 : 0.95),
+            });
         }
     }
 
     return (
-    <div className="flat-bg my-10">
-        <Canvas>
-            <Html
-                wrapperClass="webgl-iframe-wrapper"
-                distanceFactor={6.2}
-            >
-                <div className="iframe-flat-container h-full">
-                    <img
-                        ref={imgRef}
-                        src={mockupImage}
-                        alt="Device mockup"
-                        className="mockup-image"
-                        onLoad={handleImageLoad}
-                    />
-                    {loadIframe && (
-                        <iframe
-                            title={"iframe-flat"}
-                            className="webgl-iframe-flat"
-                            loading="lazy"
-                            src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
-                            style={{ height: `${iframeHeight}px` }}
-                        />
-                    )}
-                </div>
-            </Html>
-        </Canvas>
+    <div className="flat-bg">
+        <div className="iframe-flat-container h-full">
+            <img
+                ref={imgRef}
+                src={mockupImage}
+                alt="Device mockup"
+                className={`mockup-image ${deviceClassName}`}
+                onLoad={handleImageLoad}
+            />
+            {loadIframe && (
+                <iframe
+                    title={"iframe-flat"}
+                    className={iframeClassName}
+                    loading="lazy"
+                    src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
+                    style={
+                        iframeSize.width && iframeSize.height
+                            ? {
+                                width: `${iframeSize.width}px`,
+                                height: `${iframeSize.height}px`,
+                            }
+                            : undefined
+                    }
+                />
+            )}
+        </div>
     </div>
   );
 }

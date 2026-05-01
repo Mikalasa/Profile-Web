@@ -20,6 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
 }
 .iframe-iphone-container {
     position: fixed;
@@ -27,8 +28,8 @@
 }
 .iframe-flat-container {
     position: relative;
-    transform: translate(-50%, -50%);
-    width: 100vw;
+    width: 100%;
+    height: 100%;
 }
 
 canvas {
@@ -53,4 +54,56 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+    .flat-bg {
+        height: clamp(430px, 66svh, 620px);
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .webgl-iframe-flat {
+        width: min(80vw, 690px);
+        height: clamp(350px, 58svh, 545px);
+        border-radius: 1.35rem;
+    }
+
+    .mockup-image {
+        max-width: min(88vw, 760px) !important;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .webgl-iframe-tablet {
+        border-radius: 1.25rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .flat-bg {
+        height: clamp(420px, 74svh, 640px);
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .webgl-iframe-flat {
+        width: min(81vw, 370px);
+        height: clamp(390px, 68svh, 600px);
+        border-radius: 2rem;
+    }
+
+    .iframe-flat-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .mockup-image,
+    .device-mockup-phone {
+        max-width: min(92vw, 420px) !important;
+        max-height: 100%;
+        object-fit: contain;
+    }
 }

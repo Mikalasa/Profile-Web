@@ -10,16 +10,16 @@ import { isMobile } from "react-device-detect";
 // Preload the GLTF model for faster loading
 useGLTF.preload(`${process.env.PUBLIC_URL}/3DModel/the_thinker.glb`);
 
-const ThinkerModel = memo(() => {
+const ThinkerModel = memo(({ compactMode }) => {
     const { scene } = useGLTF(`${process.env.PUBLIC_URL}/3DModel/the_thinker.glb`);
 
     // Memoize calculations for performance
-    const scale = useMemo(() => (isMobile ? 2.5 : 3.5), []);
-    const position = useMemo(() => (isMobile ? [-1.8, 3, 10] : [-5.0, -0.5, 5]), []);
-    const rotationIndex = useMemo(() => (isMobile ? 0.25 : 1), []);
-    const ambientIntensity = useMemo(() => (isMobile ? 0.34 : 0.15), []);
-    const lightBoost = useMemo(() => (isMobile ? 1.55 : 1), []);
-    const enableShadows = useMemo(() => !isMobile, []);
+    const scale = useMemo(() => (compactMode ? 2.5 : 3.5), [compactMode]);
+    const position = useMemo(() => (compactMode ? [-1.8, 3, 10] : [-5.0, -0.5, 5]), [compactMode]);
+    const rotationIndex = useMemo(() => (compactMode ? 0.25 : 1), [compactMode]);
+    const ambientIntensity = useMemo(() => (compactMode ? 0.34 : 0.15), [compactMode]);
+    const lightBoost = useMemo(() => (compactMode ? 1.55 : 1), [compactMode]);
+    const enableShadows = useMemo(() => !compactMode, [compactMode]);
 
     useEffect(() => {
         if (scene) {
@@ -93,7 +93,7 @@ const ThinkerModel = memo(() => {
     );
 });
 
-const GroundPlane = memo(() => {
+const GroundPlane = memo(({ compactMode }) => {
     // Use useLoader for efficient texture loading
     const texture = useLoader(TextureLoader, `${process.env.PUBLIC_URL}/3DTexture/hero-ground.webp`);
 
@@ -101,7 +101,7 @@ const GroundPlane = memo(() => {
         <mesh
             rotation={[-Math.PI / 2 - 0.3, 0, -0.1]}
             position={[0, -3, 0]}
-            receiveShadow={!isMobile}
+            receiveShadow={!compactMode}
         >
             <planeGeometry args={[400, 400]} />
             <meshPhysicalMaterial map={texture} metalness={0.7} roughness={0.2} />
@@ -127,21 +127,21 @@ const DynamicFrameControl = ({ fps = 30 }) => {
     return null;
 };
 
-const TheThinkerCanvas = () => {
+const TheThinkerCanvas = ({ compactMode = isMobile }) => {
     const maxPolarAngle = Math.PI / 4;
     const minPolarAngle = Math.PI / 3;
-    const minAzimuthAngle = isMobile ? -Math.PI / 12 : -Math.PI / 8;
-    const maxAzimuthAngle = isMobile ? Math.PI / 30 : Math.PI / 12;
+    const minAzimuthAngle = compactMode ? -Math.PI / 12 : -Math.PI / 8;
+    const maxAzimuthAngle = compactMode ? Math.PI / 30 : Math.PI / 12;
 
     return (
         <div className="thinker-bg">
             <Canvas
                 frameloop="demand"
-                shadows={!isMobile}
+                shadows={!compactMode}
                 dpr={[1, 2]} // Limit device pixel ratio for performance
-                camera={{ position: isMobile ? [0, 15, 26] : [0, 30, 0], fov: 25, near: 0.1, far: 200 }}
+                camera={{ position: compactMode ? [0, 15, 26] : [0, 30, 0], fov: 25, near: 0.1, far: 200 }}
                 onCreated={({ camera }) => {
-                    if (isMobile) {
+                    if (compactMode) {
                         camera.lookAt(0, 0, 0);
                         camera.updateProjectionMatrix();
                     }
@@ -150,7 +150,7 @@ const TheThinkerCanvas = () => {
             >
                 <Suspense fallback={<CanvasLoader />}>
                     <DynamicFrameControl fps={30} />
-                    {!isMobile && (
+                    {!compactMode && (
                         <OrbitControls
                             enableRotate={true}
                             enableZoom={false}
@@ -160,8 +160,8 @@ const TheThinkerCanvas = () => {
                             maxAzimuthAngle={maxAzimuthAngle}
                         />
                     )}
-                    <ThinkerModel />
-                    <GroundPlane />
+                    <ThinkerModel compactMode={compactMode} />
+                    <GroundPlane compactMode={compactMode} />
                 </Suspense>
                 <Preload all />
             </Canvas>

@@ -3,6 +3,94 @@
     z-index: 1;
 }
 
+.projects-introduction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 36rem;
+    min-width: 0;
+}
+
+.projects-eyebrow {
+    margin-bottom: 0.75rem;
+    color: #FF7F50;
+    font-size: 0.88rem;
+    font-weight: 750;
+    letter-spacing: 0.2em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.projects-heading.gradient-title-text {
+    font-size: clamp(3rem, 7vw, 5rem);
+    line-height: 0.95;
+}
+
+.projects-copy {
+    margin-top: 1.35rem;
+    max-width: 30rem;
+    color: #C0C0C0;
+    font-size: 1.06rem;
+    line-height: 1.8;
+}
+
+.projects-metrics {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    max-width: 24rem;
+}
+
+.projects-metric {
+    border-left: 1px solid rgba(255, 255, 255, 0.18);
+    padding-left: 1rem;
+}
+
+.projects-metric-warm {
+    border-left-color: rgba(255, 127, 80, 0.7);
+}
+
+.projects-metric-cool {
+    border-left-color: rgba(125, 211, 252, 0.6);
+}
+
+.projects-metric p {
+    color: #ffffff;
+    font-size: clamp(1.8rem, 3vw, 2.35rem);
+    font-weight: 850;
+    line-height: 1;
+}
+
+.projects-metric span {
+    display: block;
+    margin-top: 0.45rem;
+    color: #9CA3AF;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.projects-type-list {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-width: 30rem;
+}
+
+.projects-type-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.85rem;
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    color: #D7DCE8;
+    font-size: 0.88rem;
+    line-height: 1;
+}
+
 .project-card-shell:hover,
 .project-card-shell-active {
     z-index: 40;
@@ -175,5 +263,95 @@
     }
     100% {
         transform: translate3d(36px, 36px, 0);
+    }
+}
+
+@media (max-width: 767px) {
+    .projects-introduction {
+        max-width: none;
+    }
+
+    .projects-eyebrow {
+        margin-bottom: 0.55rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.16em;
+    }
+
+    .projects-heading.gradient-title-text {
+        font-size: clamp(2.65rem, 14vw, 3.5rem);
+        line-height: 0.96;
+    }
+
+    .projects-copy {
+        margin-top: 1rem;
+        max-width: none;
+        font-size: 0.98rem;
+        line-height: 1.65;
+    }
+
+    .projects-metrics {
+        margin-top: 1.35rem;
+        gap: 0.75rem;
+        max-width: none;
+    }
+
+    .projects-metric {
+        padding-left: 0.75rem;
+    }
+
+    .projects-metric p {
+        font-size: 1.65rem;
+    }
+
+    .projects-metric span {
+        font-size: 0.8rem;
+    }
+
+    .projects-type-list {
+        margin-top: 1.1rem;
+        gap: 0.4rem;
+        max-width: none;
+    }
+
+    .projects-type-chip {
+        min-height: 1.65rem;
+        padding: 0.25rem 0.58rem;
+        font-size: 0.74rem;
+    }
+
+    .project-card {
+        min-height: auto;
+        grid-template-rows: auto auto auto;
+        gap: 0.8rem;
+        padding: 14px;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .project-card::before {
+        animation: none;
+    }
+
+    .project-img-box {
+        aspect-ratio: 16 / 9;
+    }
+
+    .project-card-title {
+        font-size: 1.08rem;
+    }
+
+    .project-card-meta {
+        letter-spacing: 0.1em;
+    }
+
+    .project-tag-box,
+    .project-tech-list {
+        max-height: none;
+        overflow: visible;
+    }
+
+    .github-icon {
+        width: 2.25rem;
+        height: 2.25rem;
     }
 }

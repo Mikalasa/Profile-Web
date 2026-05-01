@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
 import { projects } from '../../constants/config-projectsText';
 import React from "react";
-import { isMobile } from "react-device-detect";
+import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 const DesktopTilt = React.lazy(() =>
     import('react-tilt').then((module) => ({ default: module.Tilt }))
 );
 
 // ---------------------- ProjectCard component stays the same ----------------------
-const ProjectCard = React.memo(({ project, custom }) => {
+const ProjectCard = React.memo(({ project, enableTilt }) => {
     const [isTiltActive, setIsTiltActive] = React.useState(false);
     const projectTypeText = project.type.join(" / ");
 
@@ -35,7 +35,7 @@ const ProjectCard = React.memo(({ project, custom }) => {
                 <motion.img
                     src={process.env.PUBLIC_URL + '/socialIcon/github-mark.png'}
                     className="github-icon will-change-transform transform-gpu"
-                    whileHover={isMobile ? undefined : { scale: 1.1 }}
+                    whileHover={enableTilt ? { scale: 1.1 } : undefined}
                     transition={{ duration: 0.25 }}
                     onClick={openRepo}
                 />
@@ -67,10 +67,10 @@ const ProjectCard = React.memo(({ project, custom }) => {
     return (
         <div
             className={`project-card-shell ${isTiltActive ? "project-card-shell-active" : ""}`}
-            onMouseEnter={!isMobile ? () => setIsTiltActive(true) : undefined}
-            onMouseLeave={!isMobile ? () => setIsTiltActive(false) : undefined}
+            onMouseEnter={enableTilt ? () => setIsTiltActive(true) : undefined}
+            onMouseLeave={enableTilt ? () => setIsTiltActive(false) : undefined}
         >
-            {isMobile ? (
+            {!enableTilt ? (
                 card
             ) : isTiltActive ? (
                 <React.Suspense fallback={card}>
@@ -95,13 +95,15 @@ const ProjectCard = React.memo(({ project, custom }) => {
 });
 
 export default function ProjectCardList() {
+    const isNarrowViewport = useResponsiveViewport();
+    const enableTilt = !isNarrowViewport;
+
     return (
-        // This container fills the remaining height of the Projects section.
         <div className="relative h-full w-full mx-auto">
-            <div className="absolute inset-0 rounded-3xl pointer-events-none">
+            <div className="absolute inset-0 rounded-[18px] md:rounded-3xl pointer-events-none">
                 {/* Edge glow (border-only) */}
                 <div
-                    className="absolute inset-0 rounded-3xl"
+                    className="absolute inset-0 rounded-[18px] md:rounded-3xl"
                     style={{
                         boxShadow: "0 0 0 2px rgba(120,180,255,0.35), 0 0 48px rgba(120,180,255,0.35)",
                     }}
@@ -110,25 +112,23 @@ export default function ProjectCardList() {
 
                 {/* Glass background */}
                 <div
-                    className="absolute inset-0 rounded-3xl border border-white/10
+                    className="absolute inset-0 rounded-[18px] md:rounded-3xl border border-white/10
                                bg-black/30 backdrop-blur-xl
                                shadow-[0_20px_80px_rgba(0,0,0,0.55)]"
                 />
             </div>
 
-            {/* Inner scroll area */}
-            <div className="absolute inset-3 z-10 overflow-y-auto overscroll-contain px-3 sm:px-5 py-4 projectcardlist-scroll">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 justify-items-stretch">
+            <div className="absolute inset-3 z-10 overflow-y-auto overscroll-auto md:overscroll-contain px-3 sm:px-5 py-4 projectcardlist-scroll">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6 lg:gap-8 justify-items-stretch">
                     {projects.map((project, index) => (
                         <ProjectCard
                             key={project.id || index}
                             project={project}
-                            custom={index}
+                            enableTilt={enableTilt}
                         />
                     ))}
                 </div>
 
-                {/* Subtle bottom fade cue */}
                 <div className="pointer-events-none sticky bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/45 to-transparent" />
             </div>
         </div>

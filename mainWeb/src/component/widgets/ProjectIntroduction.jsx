@@ -15,16 +15,16 @@ function ProjectIntroduction() {
     ).slice(0, 4);
 
     return (
-        <aside className="projects-introduction flex flex-col justify-center max-w-xl lg:max-w-none">
+        <aside className="projects-introduction">
             <motion.div
                 ref={ref}
                 variants={textVariant(0)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}>
-                <p className="text-[#FF7F50] text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+                <p className="projects-eyebrow">
                     Selected Work
                 </p>
-                <h2 className={customTailwind.sectionHeadText + " gradient-title-text"}>Projects</h2>
+                <h2 className={customTailwind.sectionHeadText + " projects-heading gradient-title-text"}>Projects</h2>
             </motion.div>
 
             <motion.p
@@ -32,7 +32,7 @@ function ProjectIntroduction() {
                 variants={fadeIn("", "", 0.3, 4)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className='text-[#C0C0C0] text-[17px] leading-[30px] mt-5 max-w-md'
+                className='projects-copy'
             >
                 {projectOverView.paragraph}
             </motion.p>
@@ -41,15 +41,15 @@ function ProjectIntroduction() {
                 variants={fadeIn("", "", 0.55, 2)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className="mt-8 grid grid-cols-2 gap-4 max-w-sm"
+                className="projects-metrics"
             >
-                <div className="border-l border-[#FF7F50]/70 pl-4">
-                    <p className="text-white text-3xl font-bold leading-none">{projects.length}</p>
-                    <p className="text-[#9CA3AF] text-sm mt-2">Projects</p>
+                <div className="projects-metric projects-metric-warm">
+                    <p>{projects.length}</p>
+                    <span>Projects</span>
                 </div>
-                <div className="border-l border-sky-300/60 pl-4">
-                    <p className="text-white text-3xl font-bold leading-none">{projectTypes.length}</p>
-                    <p className="text-[#9CA3AF] text-sm mt-2">Categories</p>
+                <div className="projects-metric projects-metric-cool">
+                    <p>{projectTypes.length}</p>
+                    <span>Categories</span>
                 </div>
             </motion.div>
 
@@ -57,12 +57,12 @@ function ProjectIntroduction() {
                 variants={fadeIn("", "", 0.75, 2)}
                 initial="hidden"
                 animate={inView ? "show" : "hidden"}
-                className="mt-7 flex flex-wrap gap-2 max-w-md"
+                className="projects-type-list"
             >
                 {projectTypes.map((type) => (
                     <span
                         key={type}
-                        className="rounded-full border border-white/15 bg-white/[0.04] px-3 py-1 text-sm text-[#D7DCE8]"
+                        className="projects-type-chip"
                     >
                         {type}
                     </span>

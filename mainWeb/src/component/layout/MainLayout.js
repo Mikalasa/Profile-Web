@@ -1,6 +1,6 @@
 import React, { lazy } from "react";
-import { isMobile } from "react-device-detect";
 import withAutoScroll from "../../customHooks/withAutoScroll";
+import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
 const Hero = lazy(() => import("../section/Hero.jsx"));
 const Overview = lazy(() => import("../section/Overview.jsx"));
@@ -13,10 +13,11 @@ const AutoProjects = withAutoScroll(Projects);
 const AutoAbout = withAutoScroll(About);
 
 function MainLayout() {
-    const HeroComponent = isMobile ? Hero : AutoHero;
-    const OverviewComponent = isMobile ? Overview : AutoOverview;
-    const ProjectsComponent = isMobile ? Projects : AutoProjects;
-    const AboutComponent = isMobile ? About : AutoAbout;
+    const isNarrowViewport = useResponsiveViewport();
+    const HeroComponent = isNarrowViewport ? Hero : AutoHero;
+    const OverviewComponent = isNarrowViewport ? Overview : AutoOverview;
+    const ProjectsComponent = isNarrowViewport ? Projects : AutoProjects;
+    const AboutComponent = isNarrowViewport ? About : AutoAbout;
 
     return (
         <>

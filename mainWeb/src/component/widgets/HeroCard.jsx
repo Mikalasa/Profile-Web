@@ -34,7 +34,6 @@ function HeroCard() {
             }
         };
 
-        // const topElement = document.getElementById("hero-card-bg");
         const topElement = document.querySelector(".hero-container");
 
         topElement.addEventListener("mousemove", handleMouseMove);
@@ -51,34 +50,29 @@ function HeroCard() {
 
     return (
         <motion.div
-            id="hero-card-bg"
-            className={`${customTailwind.paddingX} flex flex-row items-start gap-5`}
+            className="hero-card-frame"
             initial={{opacity: 0, y: 28, scale: 0.96}}
             animate={{opacity: 1, scale: 1}}
             transition={{duration: 1.4, type: 'spring', damping: 14, stiffness: 90}}
         >
-            <div>
-                <div id="hero-card-top">
-                    <div
-                        className="hero-card"
-                        ref={cardRef}
-                    >
-                        <div className="hero-card-thumb"></div>
-                        <div className="hero-card-title flex flex-col justify-center items-center mt-5">
-                            <div className='w-5 h-5 rounded-full bg-[#FF7F50]'/>
-                            <div className='w-1 sm:h-80 h-40 violet-gradient'/>
-                        </div>
-                        <motion.div className="hero-card-des">
-                            <p className="hero-card-eyebrow">Creative Developer</p>
-                            <h1 className={`${customTailwind.heroHeadText} text-white`}>{heroText.title_f}
-                                <span className='text-[#FF7F50]'>{heroText.title_l}</span>
-                            </h1>
-                            <p className={`${customTailwind.heroSubText} hero-card-subtitle`}>
-
-                            </p>
-                        </motion.div>
-                    </div>
+            <div
+                className="hero-card"
+                ref={cardRef}
+            >
+                <div className="hero-card-thumb"></div>
+                <div className="hero-card-title flex flex-col justify-center items-center mt-5">
+                    <div className='w-5 h-5 rounded-full bg-[#FF7F50]'/>
+                    <div className='w-1 sm:h-80 h-40 violet-gradient'/>
                 </div>
+                <motion.div className="hero-card-des">
+                    <p className="hero-card-eyebrow">Creative Developer</p>
+                    <h1 className={`${customTailwind.heroHeadText} text-white`}>{heroText.title_f}
+                        <span className='text-[#FF7F50]'>{heroText.title_l}</span>
+                    </h1>
+                    <p className={`${customTailwind.heroSubText} hero-card-subtitle`}>
+                        {heroText.description}
+                    </p>
+                </motion.div>
             </div>
         </motion.div>
 

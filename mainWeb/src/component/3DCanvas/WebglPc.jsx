@@ -43,7 +43,7 @@ const MacModel = React.memo(() => {
             const showIframe = () => setLoadIframe(true);
 
             if ("requestIdleCallback" in window) {
-                idleId = window.requestIdleCallback(showIframe, { timeout: 1200 });
+                idleId = window.requestIdleCallback(showIframe, { timeout: 1000 });
             } else {
                 showIframe();
             }

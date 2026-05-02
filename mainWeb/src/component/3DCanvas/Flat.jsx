@@ -2,7 +2,9 @@ import React, {useEffect, useRef, useState} from "react";
 import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
 function Flat() {
-    const useTabletMockup = useResponsiveViewport("(min-width: 768px) and (max-width: 1024px)");
+    const useTabletMockup = useResponsiveViewport(
+        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
+    );
     const mockupImage = process.env.PUBLIC_URL + (
         useTabletMockup
             ? '/3DTexture/mockup_ipad.png'
@@ -13,6 +15,9 @@ function Flat() {
     const imgRef = useRef(null);
     const [iframeSize, setIframeSize] = useState({ width: 0, height: 0 });
     const [loadIframe, setLoadIframe] = useState(false);
+    const iframeScale = useTabletMockup
+        ? { width: 0.86, height: 0.82 }
+        : { width: 0.88, height: 0.95 };
 
     useEffect(() => {
         setIframeSize({ width: 0, height: 0 });
@@ -21,11 +26,10 @@ function Flat() {
     useEffect(() => {
         function updateIframeSize() {
             if (imgRef.current) {
-                const imgHeight = imgRef.current.clientHeight;
-                const imgWidth = imgRef.current.clientWidth;
+                const { width: imgWidth, height: imgHeight } = imgRef.current.getBoundingClientRect();
                 setIframeSize({
-                    width: imgWidth * (useTabletMockup ? 0.91 : 0.88),
-                    height: imgHeight * (useTabletMockup ? 0.88 : 0.95),
+                    width: imgWidth * iframeScale.width,
+                    height: imgHeight * iframeScale.height,
                 });
             }
         }
@@ -41,7 +45,7 @@ function Flat() {
             resizeObserver.disconnect();
             window.removeEventListener('resize', updateIframeSize);
         };
-    }, [useTabletMockup]);
+    }, [iframeScale.height, iframeScale.width]);
 
     useEffect(() => {
         let idleId;
@@ -65,11 +69,10 @@ function Flat() {
 
     function handleImageLoad() {
         if (imgRef.current) {
-            const imgHeight = imgRef.current.clientHeight;
-            const imgWidth = imgRef.current.clientWidth;
+            const { width: imgWidth, height: imgHeight } = imgRef.current.getBoundingClientRect();
             setIframeSize({
-                width: imgWidth * (useTabletMockup ? 0.91 : 0.88),
-                height: imgHeight * (useTabletMockup ? 0.88 : 0.95),
+                width: imgWidth * iframeScale.width,
+                height: imgHeight * iframeScale.height,
             });
         }
     }

@@ -14,10 +14,14 @@ const AutoAbout = withAutoScroll(About);
 
 function MainLayout() {
     const isNarrowViewport = useResponsiveViewport();
-    const HeroComponent = isNarrowViewport ? Hero : AutoHero;
-    const OverviewComponent = isNarrowViewport ? Overview : AutoOverview;
-    const ProjectsComponent = isNarrowViewport ? Projects : AutoProjects;
-    const AboutComponent = isNarrowViewport ? About : AutoAbout;
+    const isTabletViewport = useResponsiveViewport(
+        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
+    );
+    const useDirectSections = isNarrowViewport || isTabletViewport;
+    const HeroComponent = useDirectSections ? Hero : AutoHero;
+    const OverviewComponent = useDirectSections ? Overview : AutoOverview;
+    const ProjectsComponent = useDirectSections ? Projects : AutoProjects;
+    const AboutComponent = useDirectSections ? About : AutoAbout;
 
     return (
         <>

@@ -8,7 +8,9 @@ function About() {
     const [loadWebglPc, setLoadWebglPc] = useState(false);
     const webglPcRef = useRef(null);
     const isNarrowViewport = useResponsiveViewport();
-    const isTabletViewport = useResponsiveViewport("(min-width: 768px) and (max-width: 1024px)");
+    const isTabletViewport = useResponsiveViewport(
+        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
+    );
     const useFlatExperience = isMobile || isNarrowViewport || isTabletViewport;
 
     useEffect(() => {

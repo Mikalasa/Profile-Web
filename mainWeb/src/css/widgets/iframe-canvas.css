@@ -60,7 +60,10 @@ canvas {
 
 @media (max-width: 1024px) {
     .flat-bg {
-        height: clamp(430px, calc(var(--app-svh, 100svh) * 0.66), 620px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: clamp(500px, calc(var(--app-svh, 100svh) * 0.72), 640px);
         margin-top: 0;
         margin-bottom: 0;
     }
@@ -74,6 +77,56 @@ canvas {
     .mockup-image {
         max-width: min(88vw, 760px) !important;
         max-height: 100%;
+        object-fit: contain;
+    }
+
+    .iframe-flat-container {
+        width: min(88vw, 760px);
+        height: auto;
+    }
+
+    .device-mockup-tablet {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        display: block;
+        width: 100%;
+        max-width: none !important;
+        max-height: none;
+        height: auto;
+    }
+
+    .webgl-iframe-tablet {
+        border-radius: 1.25rem;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse) {
+    .flat-bg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: clamp(560px, calc(var(--app-svh, 100svh) * 0.78), 700px);
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .iframe-flat-container {
+        width: min(88vw, 880px);
+        height: auto;
+    }
+
+    .device-mockup-tablet {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        display: block;
+        width: 100%;
+        max-width: none !important;
+        max-height: none;
+        height: auto;
         object-fit: contain;
     }
 
@@ -112,7 +165,7 @@ canvas {
         left: auto;
         transform: none;
         display: block;
-        width: min(92vw, 450px);
+        width: min(90vw, 450px);
         max-width: none !important;
         max-height: none;
         height: auto;

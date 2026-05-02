@@ -3,7 +3,7 @@ export function lockMinViewportHeightVar(varName = "--app-svh") {
     // 只在移动端启用（你已经用了 react-device-detect，这里再保险一层）
     const isMobile =
         (navigator.maxTouchPoints || 0) > 0 &&
-        window.matchMedia("(max-width: 1024px)").matches;
+        window.matchMedia("(max-width: 1368px)").matches;
 
     if (!isMobile) return () => {};
 

@@ -7,12 +7,13 @@ import MainLayout from "./component/layout/MainLayout";
 import { lockMinViewportHeightVar } from "./utility/lockSmallVh";
 import { useResponsiveViewport } from "./utility/useResponsiveViewport";
 
-const MOBILE_WARNING_DISMISSED_KEY = "profile-web-mobile-warning-dismissed";
-
 function App() {
     const [isNavClick, setIsNavClick] = useState(false);
     const [showMobileWarning, setShowMobileWarning] = useState(false);
     const isNarrowViewport = useResponsiveViewport();
+    const isTabletViewport = useResponsiveViewport(
+        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
+    );
 
     useEffect(() => {
         if ('scrollRestoration' in window.history) {
@@ -22,14 +23,11 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const warningDismissed = window.localStorage.getItem(MOBILE_WARNING_DISMISSED_KEY) === "true";
-        if ((isMobile || isNarrowViewport) && !warningDismissed) {
-            setShowMobileWarning(true);
-        }
-    }, [isNarrowViewport]);
+        const shouldWarn = isMobile || isNarrowViewport || isTabletViewport;
+        setShowMobileWarning(shouldWarn);
+    }, [isNarrowViewport, isTabletViewport]);
 
     const dismissMobileWarning = () => {
-        window.localStorage.setItem(MOBILE_WARNING_DISMISSED_KEY, "true");
         setShowMobileWarning(false);
     };
 

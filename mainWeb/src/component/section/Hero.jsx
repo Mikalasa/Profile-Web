@@ -10,7 +10,9 @@ const TheThinkerCanvas = lazy(() => import("../3DCanvas/TheThinker.jsx"));
 function Hero() {
     const [showCanvas, setShowCanvas] = useState(false);
     const isNarrowViewport = useResponsiveViewport();
-    const isTabletViewport = useResponsiveViewport("(min-width: 768px) and (max-width: 1024px)");
+    const isTabletViewport = useResponsiveViewport(
+        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
+    );
     const useMobileHeroExperience = isMobile || isNarrowViewport || isTabletViewport;
 
     useEffect(() => {

@@ -112,20 +112,24 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: var(--app-svh, 100%);
+    min-height: var(--app-svh, 100%);
     z-index: 2;
-    padding: 5.25rem 1.35rem 6rem;
+    padding:
+            clamp(4.75rem, calc(var(--app-svh, 100svh) * 0.08), 5.25rem)
+            1.35rem
+            clamp(5.25rem, calc(var(--app-svh, 100svh) * 0.1), 6rem);
 }
 
 .mobile-hero-card {
     position: relative;
     width: min(100%, 21.5rem);
-    min-height: 17rem;
+    min-height: clamp(14.5rem, calc(var(--app-svh, 100svh) * 0.34), 17rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 1.45rem;
-    border-radius: 22px;
+    padding: clamp(1.2rem, calc(var(--app-svh, 100svh) * 0.032), 1.45rem);
+    border-radius: clamp(19px, calc(var(--app-svh, 100svh) * 0.032), 22px);
     overflow: hidden;
     background:
             linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.055)),
@@ -180,7 +184,7 @@
 
 .mobile-hero-title {
     color: #ffffff;
-    font-size: clamp(3.25rem, 16vw, 4.75rem);
+    font-size: clamp(2.75rem, min(16vw, calc(var(--app-svh, 100svh) * 0.095)), 4.75rem);
     font-weight: 950;
     line-height: 0.92;
 }
@@ -191,34 +195,12 @@
 }
 
 .mobile-hero-subtitle {
-    margin-top: 1rem;
+    margin-top: clamp(0.8rem, calc(var(--app-svh, 100svh) * 0.018), 1rem);
     max-width: 16rem;
     color: rgba(255, 255, 255, 0.88);
-    font-size: 1.12rem;
+    font-size: clamp(1rem, calc(var(--app-svh, 100svh) * 0.021), 1.12rem);
     font-weight: 750;
     line-height: 1.45;
-}
-
-@media (max-height: 700px) and (max-width: 767px) {
-    .mobile-hero-card-wrap {
-        padding-top: 4.75rem;
-        padding-bottom: 5.25rem;
-    }
-
-    .mobile-hero-card {
-        min-height: 14.5rem;
-        padding: 1.2rem;
-        border-radius: 19px;
-    }
-
-    .mobile-hero-title {
-        font-size: clamp(2.75rem, 13vw, 3.6rem);
-    }
-
-    .mobile-hero-subtitle {
-        margin-top: 0.8rem;
-        font-size: 1rem;
-    }
 }
 
 .violet-gradient {

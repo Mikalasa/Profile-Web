@@ -29,7 +29,7 @@ function About() {
     }, []);
 
     const sectionClassName = useFlatExperience
-        ? "about-container about-container-flat layout-container min-h-[var(--app-svh)] md:h-svh"
+        ? "about-container about-container-flat layout-container min-h-[var(--app-svh)] min-[1025px]:h-svh"
         : "about-container layout-container min-h-[var(--app-svh)] md:h-svh";
 
     return (

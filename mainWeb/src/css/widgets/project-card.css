@@ -3,6 +3,10 @@
     z-index: 1;
 }
 
+.project-list-frame {
+    height: clamp(21rem, calc(var(--app-svh, 100svh) * 0.62), 34rem);
+}
+
 .projects-introduction {
     display: flex;
     flex-direction: column;
@@ -263,6 +267,18 @@
     }
     100% {
         transform: translate3d(36px, 36px, 0);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .project-list-frame {
+        height: clamp(24rem, calc(var(--app-svh, 100svh) * 0.52), 34rem);
+    }
+}
+
+@media (min-width: 1025px) {
+    .project-list-frame {
+        height: clamp(32rem, 72vh, 46rem);
     }
 }
 

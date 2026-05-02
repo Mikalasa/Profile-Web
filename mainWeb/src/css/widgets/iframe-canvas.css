@@ -60,14 +60,14 @@ canvas {
 
 @media (max-width: 1024px) {
     .flat-bg {
-        height: clamp(430px, 66svh, 620px);
+        height: clamp(430px, calc(var(--app-svh, 100svh) * 0.66), 620px);
         margin-top: 0;
         margin-bottom: 0;
     }
 
     .webgl-iframe-flat {
         width: min(80vw, 690px);
-        height: clamp(350px, 58svh, 545px);
+        height: clamp(350px, calc(var(--app-svh, 100svh) * 0.58), 545px);
         border-radius: 1.35rem;
     }
 
@@ -84,14 +84,14 @@ canvas {
 
 @media (max-width: 767px) {
     .flat-bg {
-        height: clamp(420px, 74svh, 640px);
+        height: clamp(420px, calc(var(--app-svh, 100svh) * 0.74), 640px);
         margin-top: 1rem;
         margin-bottom: 1rem;
     }
 
     .webgl-iframe-flat {
         width: min(81vw, 370px);
-        height: clamp(390px, 68svh, 600px);
+        height: clamp(390px, calc(var(--app-svh, 100svh) * 0.68), 600px);
         border-radius: 2rem;
     }
 

@@ -29,7 +29,9 @@ html, body {
 }
 
 .iframe-hero {
-    min-height: clamp(20rem, 72vh, 42rem);
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-block: clamp(2rem, 6vh, 4rem);
     background:
             radial-gradient(circle at 50% 14%, rgba(125, 211, 252, 0.08), transparent 35%),
             radial-gradient(circle at 50% 90%, rgba(255, 127, 80, 0.08), transparent 42%);
@@ -569,7 +571,9 @@ html, body {
 
 @media (max-width: 767px) {
     .iframe-hero {
-        min-height: clamp(17rem, 62vh, 32rem);
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-block: 2rem;
     }
 
     .iframe-hero-title {
@@ -630,7 +634,9 @@ html, body {
 
 @media (min-width: 768px) and (max-width: 1024px) {
     .iframe-hero {
-        min-height: clamp(18rem, 60vh, 36rem);
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-block: clamp(2rem, 6vh, 4rem);
     }
 
     .vertical-timeline {
@@ -656,7 +662,9 @@ html, body {
 
 @media (max-height: 620px) and (min-width: 768px) {
     .iframe-hero {
-        min-height: 18rem;
+        min-height: 100vh;
+        min-height: 100svh;
+        padding-block: 1.5rem;
     }
 
     .vertical-timeline-element {

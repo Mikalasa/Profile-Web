@@ -1,6 +1,6 @@
 // TheThinkerCanvas.jsx
 
-import React, { Suspense, useEffect, useMemo, memo } from "react";
+import React, { Suspense, useEffect, useMemo, memo, useState } from "react";
 import {Canvas, useLoader, useThree} from "@react-three/fiber";
 import { Float, OrbitControls, Preload, useGLTF } from "@react-three/drei";
 import { TextureLoader } from "three";
@@ -128,13 +128,32 @@ const DynamicFrameControl = ({ fps = 30 }) => {
 };
 
 const TheThinkerCanvas = ({ compactMode = isMobile }) => {
+    const [isDragging, setIsDragging] = useState(false);
     const maxPolarAngle = Math.PI / 4;
     const minPolarAngle = Math.PI / 3;
     const minAzimuthAngle = compactMode ? -Math.PI / 12 : -Math.PI / 8;
     const maxAzimuthAngle = compactMode ? Math.PI / 30 : Math.PI / 12;
 
+    const handlePointerDown = () => {
+        if (compactMode) {
+            return;
+        }
+
+        setIsDragging(true);
+        window.dispatchEvent(new CustomEvent("thinker-model-interacted"));
+    };
+
+    const handlePointerUp = () => {
+        setIsDragging(false);
+    };
+
     return (
-        <div className="thinker-bg">
+        <div
+            className={`thinker-bg ${!compactMode ? "thinker-bg-interactive" : ""} ${isDragging ? "thinker-bg-dragging" : ""}`}
+            onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+        >
             <Canvas
                 frameloop="demand"
                 shadows={!compactMode}

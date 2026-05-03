@@ -27,11 +27,8 @@ export const heroText = {
 export const IntroductionOverView = {
     paragraph:
         <>
-            Throughout my career, I have taken on roles as both a <span
-            className="text-[20px] the-highLight-words">front-end developer</span> and a <span
-            className="text-[20px] the-highLight-words">tester</span>.
-            <br/>
-            <br/>
+            I am a <span
+            className="text-[20px] the-highLight-words">software engineer</span>.
             Beyond my <span className="text-[20px] the-highLight-words">core skills</span>
             , I see development not merely as coding, but as a mindset and a path toward the future.
         </>

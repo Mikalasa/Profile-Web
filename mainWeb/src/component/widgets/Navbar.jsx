@@ -46,29 +46,56 @@ const Navbar = () => {
 
     useEffect(() => {
         const sectionIds = ["hero", ...navLinks.map((link) => link.id)];
-        const sections = sectionIds
-            .map((id) => document.getElementById(id))
-            .filter(Boolean);
+        let ticking = false;
 
-        if (!sections.length) return undefined;
+        const updateActiveSection = () => {
+            const sections = sectionIds
+                .map((id) => document.getElementById(id))
+                .filter(Boolean);
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visible = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (!sections.length) return;
 
-                if (visible?.target?.id) {
-                    setActiveSection(visible.target.id);
-                }
-            },
-            {
-                threshold: [0.35, 0.55],
+            const navHeight = navRef.current?.offsetHeight ?? 0;
+            const anchorY = navHeight + window.innerHeight * 0.38;
+
+            const currentSection = sections.find((section) => {
+                const rect = section.getBoundingClientRect();
+                return rect.top <= anchorY && rect.bottom > anchorY;
+            });
+
+            if (currentSection?.id) {
+                setActiveSection(currentSection.id);
+                return;
             }
-        );
 
-        sections.forEach((section) => observer.observe(section));
-        return () => observer.disconnect();
+            const closestSection = sections.reduce((closest, section) => {
+                const rect = section.getBoundingClientRect();
+                const distance = Math.abs(rect.top - anchorY);
+                return distance < closest.distance ? { id: section.id, distance } : closest;
+            }, { id: "hero", distance: Number.POSITIVE_INFINITY });
+
+            setActiveSection(closestSection.id);
+        };
+
+        const requestUpdate = () => {
+            if (ticking) return;
+
+            ticking = true;
+            window.requestAnimationFrame(() => {
+                updateActiveSection();
+                ticking = false;
+            });
+        };
+
+        window.addEventListener("scroll", requestUpdate, { passive: true });
+        window.addEventListener("resize", requestUpdate);
+
+        const initialUpdateId = window.setTimeout(updateActiveSection, 0);
+        return () => {
+            window.clearTimeout(initialUpdateId);
+            window.removeEventListener("scroll", requestUpdate);
+            window.removeEventListener("resize", requestUpdate);
+        };
     }, []);
 
     useEffect(() => {
@@ -161,20 +188,9 @@ const Navbar = () => {
                         className="navbar-logo"
                         alt="Logo"
                     />
-                    <a
-                        href="/"
-                        className="navbar-item flex items-center gap-2"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setIsNavClick(true);
-                            setActiveSection("hero");
-                            setToggle(false);
-                            window.scrollTo({ top: 0, behavior: "smooth" });
-                            window.setTimeout(() => setIsNavClick(false), 900);
-                        }}
-                    >
+                    <span className="navbar-brand-name">
                         Xingyi
-                    </a>
+                    </span>
                 </div>
 
                 {/* Desktop nav */}

@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
 const TABLET_SCREEN_FRAME = {
@@ -18,13 +19,13 @@ function Flat() {
             : '/3DTexture/mockup_iphone.png'
     );
     const deviceClassName = useTabletMockup ? "device-mockup-tablet" : "device-mockup-phone";
-    const iframeClassName = useTabletMockup ? "webgl-iframe-flat webgl-iframe-tablet" : "webgl-iframe-flat";
     const imgRef = useRef(null);
     const [iframeSize, setIframeSize] = useState({ width: 0, height: 0 });
     const [loadIframe, setLoadIframe] = useState(false);
+    const [showSwipeHint, setShowSwipeHint] = useState(false);
     const iframeScale = useTabletMockup
         ? { width: 0.86, height: 0.82 }
-        : { width: 0.88, height: 0.95 };
+        : { width: 0.914, height: 0.95 };
 
     useEffect(() => {
         setIframeSize({ width: 0, height: 0 });
@@ -65,7 +66,10 @@ function Flat() {
     useEffect(() => {
         let idleId;
         const delayId = window.setTimeout(() => {
-            const showIframe = () => setLoadIframe(true);
+            const showIframe = () => {
+                setLoadIframe(true);
+                window.setTimeout(() => setShowSwipeHint(true), 450);
+            };
 
             if ("requestIdleCallback" in window) {
                 idleId = window.requestIdleCallback(showIframe, { timeout: 1200 });
@@ -81,6 +85,15 @@ function Flat() {
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (!showSwipeHint) {
+            return undefined;
+        }
+
+        const hideTimer = window.setTimeout(() => setShowSwipeHint(false), 7200);
+        return () => window.clearTimeout(hideTimer);
+    }, [showSwipeHint]);
 
     function handleImageLoad() {
         if (imgRef.current) {
@@ -100,6 +113,22 @@ function Flat() {
         }
     }
 
+    const iframeStyle = iframeSize.width && iframeSize.height
+        ? {
+            width: `${iframeSize.width}px`,
+            height: `${iframeSize.height}px`,
+            ...(useTabletMockup
+                ? {
+                    left: `${iframeSize.left}px`,
+                    top: `${iframeSize.top}px`,
+                    transform: "none",
+                }
+                : {}),
+        }
+        : undefined;
+
+    const dismissSwipeHint = () => setShowSwipeHint(false);
+
     return (
     <div className="flat-bg">
         <div className="iframe-flat-container h-full">
@@ -111,27 +140,36 @@ function Flat() {
                 onLoad={handleImageLoad}
             />
             {loadIframe && (
-                <iframe
-                    title={"iframe-flat"}
-                    className={iframeClassName}
-                    loading="lazy"
-                    src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
-                    style={
-                        iframeSize.width && iframeSize.height
-                            ? {
-                                width: `${iframeSize.width}px`,
-                                height: `${iframeSize.height}px`,
-                                ...(useTabletMockup
-                                    ? {
-                                        left: `${iframeSize.left}px`,
-                                        top: `${iframeSize.top}px`,
-                                        transform: "none",
-                                    }
-                                    : {}),
-                            }
-                            : undefined
-                    }
-                />
+                <div
+                    className={`flat-iframe-screen-layer ${useTabletMockup ? "flat-iframe-screen-tablet" : "flat-iframe-screen-phone"}`}
+                    style={iframeStyle}
+                    onPointerEnter={dismissSwipeHint}
+                    onPointerDown={dismissSwipeHint}
+                    onTouchStart={dismissSwipeHint}
+                >
+                    <iframe
+                        title={"iframe-flat"}
+                        className={`flat-iframe-content ${useTabletMockup ? "webgl-iframe-tablet" : ""}`}
+                        loading="lazy"
+                        src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
+                    />
+                    <AnimatePresence>
+                        {showSwipeHint && (
+                            <motion.div
+                                className="flat-iframe-swipe-hint"
+                                initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                            >
+                                <span className="flat-iframe-swipe-icon" aria-hidden="true">
+                                    <span />
+                                </span>
+                                <span>Swipe inside screen</span>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </div>
             )}
         </div>
     </div>

@@ -118,7 +118,14 @@ section {
 .projectcardlist-scroll{
      scrollbar-gutter: stable;
      scrollbar-width: thin;                 /* Firefox */
-     scrollbar-color: rgba(255,255,255,.28) rgba(0,0,0,0); /* thumb / track */
+     scrollbar-color: transparent transparent; /* thumb / track */
+     transition: scrollbar-color 0.22s ease;
+}
+
+.projectcardlist-scroll:hover,
+.projectcardlist-scroll:focus-within,
+.projectcardlist-scroll.projectcardlist-scroll-visible{
+     scrollbar-color: rgba(255,255,255,.28) rgba(0,0,0,0);
 }
 
 /* WebKit (Chrome/Safari/Edge) */
@@ -126,18 +133,30 @@ section {
     width: 10px;
 }
 .projectcardlist-scroll::-webkit-scrollbar-track{
-    background: rgba(255,255,255,0.06);
+    background: transparent;
     border-radius: 999px;
     margin: 10px 0;
 }
 .projectcardlist-scroll::-webkit-scrollbar-thumb{
+    background: transparent;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    box-shadow: none;
+}
+.projectcardlist-scroll:hover::-webkit-scrollbar-track,
+.projectcardlist-scroll:focus-within::-webkit-scrollbar-track,
+.projectcardlist-scroll.projectcardlist-scroll-visible::-webkit-scrollbar-track{
+    background: rgba(255,255,255,0.06);
+}
+.projectcardlist-scroll:hover::-webkit-scrollbar-thumb,
+.projectcardlist-scroll:focus-within::-webkit-scrollbar-thumb,
+.projectcardlist-scroll.projectcardlist-scroll-visible::-webkit-scrollbar-thumb{
     background: linear-gradient(
             to bottom,
             rgba(125, 211, 252, 0.35),
             rgba(34, 211, 238, 0.22),
             rgba(59, 130, 246, 0.32)
     );
-    border-radius: 999px;
     border: 2px solid rgba(0,0,0,0.25);
     box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }

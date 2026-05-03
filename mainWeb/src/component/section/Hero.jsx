@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 import MouseScrollicon from "../widgets/MouseScrollicon.jsx";
 import HeroCard from "../widgets/HeroCard.jsx";
 import HeroCardMobile from "../widgets/HeroCard_Mobile.jsx";
+import ThinkerDragHint from "../widgets/ThinkerDragHint.jsx";
 import { isMobile } from "react-device-detect";
 import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
@@ -51,6 +52,7 @@ function Hero() {
                     <TheThinkerCanvas compactMode={useMobileHeroExperience}/>
                 </Suspense>
             )}
+            {showCanvas && !useMobileHeroExperience && <ThinkerDragHint />}
             <MouseScrollicon/>
         </section>
     );

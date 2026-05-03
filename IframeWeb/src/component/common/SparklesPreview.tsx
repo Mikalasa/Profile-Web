@@ -3,19 +3,26 @@ import React from "react";
 
 export function SparklesPreview() {
     return (
-        <div className="thanks-panel w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
-            <h1 className="thanks-title font-bold text-center text-neutral-300 relative z-20 mb-2">
-                Thanks
-            </h1>
-            <div className="thanks-line my-8 relative">
-                {/* Gradients */}
-                <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
-                <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
-                <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
-                <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
-
-                <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
+        <section className="ending-page w-full overflow-hidden" aria-label="Ending animation">
+            <div className="ending-system">
+                <div className="orb-pulse">
+                    <span className="signal-orbit signal-orbit-one" aria-hidden="true" />
+                    <span className="signal-orbit signal-orbit-two" aria-hidden="true" />
+                    <span className="orb-ring orb-ring-one" aria-hidden="true" />
+                    <span className="orb-ring orb-ring-two" aria-hidden="true" />
+                    <span className="signal-node signal-node-one" aria-hidden="true" />
+                    <span className="signal-node signal-node-two" aria-hidden="true" />
+                    <span className="signal-node signal-node-three" aria-hidden="true" />
+                    <span className="orb-core" aria-hidden="true" />
+                    <div className="glass-chip">
+                        <span className="chip-light" aria-hidden="true" />
+                        <span className="chip-name">Xingyi</span>
+                        <span className="chip-scan" aria-hidden="true" />
+                    </div>
+                </div>
+                <p>Signal Continues</p>
+                <span className="signal-wave" aria-hidden="true" />
             </div>
-        </div>
+        </section>
     );
 }

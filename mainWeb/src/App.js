@@ -1,7 +1,8 @@
 import React, { Suspense, useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { isMobile, isTablet } from "react-device-detect";
 import Navbar from "./component/widgets/Navbar.jsx";
 import MobileWarningModal from "./component/modal/MobileWarningModal.jsx";
+import DesktopViewportNotice from "./component/modal/DesktopViewportNotice.jsx";
 import { AutoScrollContext } from './utility/AutoScrollContext';
 import MainLayout from "./component/layout/MainLayout";
 import { lockMinViewportHeightVar } from "./utility/lockSmallVh";
@@ -10,10 +11,8 @@ import { useResponsiveViewport } from "./utility/useResponsiveViewport";
 function App() {
     const [isNavClick, setIsNavClick] = useState(false);
     const [showMobileWarning, setShowMobileWarning] = useState(false);
-    const isNarrowViewport = useResponsiveViewport();
-    const isTabletViewport = useResponsiveViewport(
-        "(min-width: 768px) and (max-width: 1024px), (min-width: 1025px) and (max-width: 1368px) and (pointer: coarse)"
-    );
+    const useCompactDesktopLayout = useResponsiveViewport("(max-width: 1024px)");
+    const showDesktopViewportNotice = !isMobile && !isTablet && useCompactDesktopLayout;
 
     useEffect(() => {
         if ('scrollRestoration' in window.history) {
@@ -23,9 +22,9 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const shouldWarn = isMobile || isNarrowViewport || isTabletViewport;
+        const shouldWarn = isMobile || isTablet;
         setShowMobileWarning(shouldWarn);
-    }, [isNarrowViewport, isTabletViewport]);
+    }, []);
 
     const dismissMobileWarning = () => {
         setShowMobileWarning(false);
@@ -43,6 +42,7 @@ function App() {
                 {showMobileWarning && (
                     <MobileWarningModal onClose={dismissMobileWarning} />
                 )}
+                {showDesktopViewportNotice && <DesktopViewportNotice />}
                 <Suspense fallback={<div>Loading...</div>}>
                     <MainLayout />
                 </Suspense>

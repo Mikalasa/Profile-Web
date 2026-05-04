@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useResponsiveViewport } from "../../utility/useResponsiveViewport";
 
@@ -7,6 +7,11 @@ const TABLET_SCREEN_FRAME = {
     top: 0.061,
     width: 0.914,
     height: 0.876,
+};
+
+const PHONE_SCREEN_SCALE = {
+    width: 0.885,
+    height: 0.95,
 };
 
 function Flat() {
@@ -23,9 +28,25 @@ function Flat() {
     const [iframeSize, setIframeSize] = useState({ width: 0, height: 0 });
     const [loadIframe, setLoadIframe] = useState(false);
     const [showSwipeHint, setShowSwipeHint] = useState(false);
-    const iframeScale = useTabletMockup
-        ? { width: 0.86, height: 0.82 }
-        : { width: 0.914, height: 0.95 };
+
+    const calculateIframeSize = useCallback(() => {
+        if (!imgRef.current) {
+            return null;
+        }
+
+        const { width: imgWidth, height: imgHeight } = imgRef.current.getBoundingClientRect();
+        return useTabletMockup
+            ? {
+                width: imgWidth * TABLET_SCREEN_FRAME.width,
+                height: imgHeight * TABLET_SCREEN_FRAME.height,
+                left: imgWidth * TABLET_SCREEN_FRAME.left,
+                top: imgHeight * TABLET_SCREEN_FRAME.top,
+            }
+            : {
+                width: imgWidth * PHONE_SCREEN_SCALE.width,
+                height: imgHeight * PHONE_SCREEN_SCALE.height,
+            };
+    }, [useTabletMockup]);
 
     useEffect(() => {
         setIframeSize({ width: 0, height: 0 });
@@ -33,19 +54,8 @@ function Flat() {
 
     useEffect(() => {
         function updateIframeSize() {
-            if (imgRef.current) {
-                const { width: imgWidth, height: imgHeight } = imgRef.current.getBoundingClientRect();
-                const nextSize = useTabletMockup
-                    ? {
-                        width: imgWidth * TABLET_SCREEN_FRAME.width,
-                        height: imgHeight * TABLET_SCREEN_FRAME.height,
-                        left: imgWidth * TABLET_SCREEN_FRAME.left,
-                        top: imgHeight * TABLET_SCREEN_FRAME.top,
-                    }
-                    : {
-                        width: imgWidth * iframeScale.width,
-                        height: imgHeight * iframeScale.height,
-                    };
+            const nextSize = calculateIframeSize();
+            if (nextSize) {
                 setIframeSize(nextSize);
             }
         }
@@ -61,7 +71,7 @@ function Flat() {
             resizeObserver.disconnect();
             window.removeEventListener('resize', updateIframeSize);
         };
-    }, [iframeScale.height, iframeScale.width, useTabletMockup]);
+    }, [calculateIframeSize]);
 
     useEffect(() => {
         let idleId;
@@ -96,19 +106,8 @@ function Flat() {
     }, [showSwipeHint]);
 
     function handleImageLoad() {
-        if (imgRef.current) {
-            const { width: imgWidth, height: imgHeight } = imgRef.current.getBoundingClientRect();
-            const nextSize = useTabletMockup
-                ? {
-                    width: imgWidth * TABLET_SCREEN_FRAME.width,
-                    height: imgHeight * TABLET_SCREEN_FRAME.height,
-                    left: imgWidth * TABLET_SCREEN_FRAME.left,
-                    top: imgHeight * TABLET_SCREEN_FRAME.top,
-                }
-                : {
-                    width: imgWidth * iframeScale.width,
-                    height: imgHeight * iframeScale.height,
-                };
+        const nextSize = calculateIframeSize();
+        if (nextSize) {
             setIframeSize(nextSize);
         }
     }

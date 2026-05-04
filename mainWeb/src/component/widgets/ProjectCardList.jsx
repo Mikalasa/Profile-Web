@@ -104,16 +104,17 @@ export default function ProjectCardList() {
     const [showScrollHint, setShowScrollHint] = React.useState(false);
     const [showScrollbar, setShowScrollbar] = React.useState(false);
     const hideScrollbarTimer = React.useRef(null);
+    const hideScrollHintTimer = React.useRef(null);
 
     React.useEffect(() => {
         const showTimer = window.setTimeout(() => setShowScrollHint(true), 450);
-        const hideTimer = window.setTimeout(() => setShowScrollHint(false), 7000);
+        const hideTimer = window.setTimeout(() => setShowScrollHint(false), useTouchHint ? 12000 : 7000);
 
         return () => {
             window.clearTimeout(showTimer);
             window.clearTimeout(hideTimer);
         };
-    }, []);
+    }, [useTouchHint]);
 
     const revealScrollbar = React.useCallback(() => {
         window.clearTimeout(hideScrollbarTimer.current);
@@ -121,13 +122,33 @@ export default function ProjectCardList() {
         hideScrollbarTimer.current = window.setTimeout(() => setShowScrollbar(false), 1100);
     }, []);
 
+    const hideScrollHintAfterInteraction = React.useCallback(() => {
+        window.clearTimeout(hideScrollHintTimer.current);
+        if (!useTouchHint) {
+            setShowScrollHint(false);
+            return;
+        }
+
+        hideScrollHintTimer.current = window.setTimeout(() => {
+            setShowScrollHint(false);
+        }, 2200);
+    }, [useTouchHint]);
+
     const handleListInteraction = React.useCallback(() => {
+        hideScrollHintAfterInteraction();
+        revealScrollbar();
+    }, [hideScrollHintAfterInteraction, revealScrollbar]);
+
+    const handlePointerListInteraction = React.useCallback(() => {
         setShowScrollHint(false);
         revealScrollbar();
     }, [revealScrollbar]);
 
     React.useEffect(() => (
-        () => window.clearTimeout(hideScrollbarTimer.current)
+        () => {
+            window.clearTimeout(hideScrollbarTimer.current);
+            window.clearTimeout(hideScrollHintTimer.current);
+        }
     ), []);
 
     return (
@@ -155,7 +176,7 @@ export default function ProjectCardList() {
                     showScrollbar ? "projectcardlist-scroll-visible" : ""
                 }`}
                 onScroll={handleListInteraction}
-                onWheel={handleListInteraction}
+                onWheel={handlePointerListInteraction}
                 onTouchMove={handleListInteraction}
                 onMouseEnter={revealScrollbar}
                 onFocus={revealScrollbar}

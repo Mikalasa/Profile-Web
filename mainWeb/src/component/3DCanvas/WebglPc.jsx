@@ -62,6 +62,22 @@ const MacModel = React.memo(() => {
     const [loadIframe, setLoadIframe] = React.useState(false);
     const [showScrollHint, setShowScrollHint] = React.useState(false);
     const invalidate = useThree((state) => state.invalidate);
+    const refreshHtmlProjection = React.useCallback((frameLimit = 18) => {
+        let frameId;
+        let frameCount = 0;
+
+        const invalidateFrame = () => {
+            invalidate();
+            frameCount += 1;
+
+            if (frameCount < frameLimit) {
+                frameId = window.requestAnimationFrame(invalidateFrame);
+            }
+        };
+
+        frameId = window.requestAnimationFrame(invalidateFrame);
+        return () => window.cancelAnimationFrame(frameId);
+    }, [invalidate]);
 
     // Memoized positions and rotations
     const modelPosition = useMemo(() => [3, -3.0, 2.5], []);
@@ -109,21 +125,8 @@ const MacModel = React.memo(() => {
             return undefined;
         }
 
-        let frameId;
-        let frameCount = 0;
-
-        const settleHtmlPosition = () => {
-            invalidate();
-            frameCount += 1;
-
-            if (frameCount < 8) {
-                frameId = window.requestAnimationFrame(settleHtmlPosition);
-            }
-        };
-
-        frameId = window.requestAnimationFrame(settleHtmlPosition);
-        return () => window.cancelAnimationFrame(frameId);
-    }, [invalidate, loadIframe]);
+        return refreshHtmlProjection();
+    }, [loadIframe, refreshHtmlProjection]);
 
     useEffect(() => {
         if (!showScrollHint) {
@@ -162,6 +165,7 @@ const MacModel = React.memo(() => {
                                 className={`webgl-iframe webgl-iframe-${os}`}
                                 sandbox="allow-scripts allow-same-origin"
                                 loading="lazy"
+                                onLoad={() => refreshHtmlProjection(36)}
                                 src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
                             />
                             <IframeScrollHint visible={showScrollHint} />
@@ -219,6 +223,7 @@ const WebglPc = () => {
                 <Suspense fallback={<CanvasLoader />}>
                     {/* PresentationControls with your original values */}
                     <PresentationControls
+                        global
                         snap
                         config={{ tension: 120, friction: 20 }}
                         azimuth={[(-20 * Math.PI) / 180, (20 * Math.PI) / 180]}

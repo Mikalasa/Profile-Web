@@ -5,12 +5,14 @@
     position: relative;
     width: 1500px;
     height: 840px;
+    overflow: hidden;
+    background: #050505;
 }
 .webgl-iframe {
+    display: block;
     border: none;
     width: 1500px;
     height: 840px;
-    will-change: transform, opacity;
 }
 .webgl-iframe-iphone {
     width: 420px;
@@ -52,8 +54,8 @@
 .flat-iframe-swipe-hint {
     position: absolute;
     left: 50%;
-    top: clamp(0.8rem, 7%, 1.35rem);
-    z-index: 4;
+    top: clamp(1.7rem, 10%, 2.4rem);
+    z-index: 6;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -300,7 +302,7 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 2;
+    z-index: 5;
     pointer-events: none;
 }
 
@@ -411,7 +413,8 @@ canvas {
         left: auto;
         transform: none;
         display: block;
-        width: min(90vw, 450px);
+        margin: 0 auto;
+        width: min(87vw, 450px);
         max-width: none !important;
         max-height: none;
         height: auto;

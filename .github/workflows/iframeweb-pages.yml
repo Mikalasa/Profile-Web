@@ -1,0 +1,58 @@
+name: Deploy IframeWeb to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'IframeWeb/**'
+      - '.github/workflows/iframeweb-pages.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+
+      - name: Install deps
+        working-directory: IframeWeb
+        run: npm ci
+
+
+      - name: Build
+        working-directory: IframeWeb
+        run: CI=false npm run build
+
+
+      - name: Prepare Pages
+        run: |
+          mkdir dist
+          cp -R IframeWeb/build/. dist/
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
+
+      - name: Deploy GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: dist
+          force_orphan: true

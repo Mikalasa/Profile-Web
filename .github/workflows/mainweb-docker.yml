@@ -1,0 +1,48 @@
+name: Build mainWeb Docker Image
+
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'mainWeb/**'
+
+
+permissions:
+  contents: read
+  packages: write
+
+
+jobs:
+
+  docker:
+
+    runs-on: ubuntu-latest
+
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+
+      - name: Build and push
+
+        uses: docker/build-push-action@v5
+
+        with:
+
+          context: ./mainWeb
+
+          push: true
+
+          tags: |
+            ghcr.io/mikalasa/profile-mainweb:latest

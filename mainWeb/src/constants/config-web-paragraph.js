@@ -18,7 +18,7 @@ export const navLinks = [
 
 export const heroText = {
     title_f: "Hi, I'm ",
-    title_l: "Xingyi test 22",
+    title_l: "Xingyi test 222",
     description: <>
         {"Let's build the world."}
     </>

@@ -166,7 +166,7 @@ const MacModel = React.memo(() => {
                                 sandbox="allow-scripts allow-same-origin"
                                 loading="lazy"
                                 onLoad={() => refreshHtmlProjection(36)}
-                                src="https://mikalasa.github.io/Profile-Web/IframeWeb/"
+                                src="https://mikalasa.github.io/Profile-Web/"
                             />
                             <IframeScrollHint visible={showScrollHint} />
                         </div>

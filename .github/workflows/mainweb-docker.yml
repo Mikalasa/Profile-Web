@@ -46,3 +46,8 @@ jobs:
 
           tags: |
             ghcr.io/mikalasa/profile-mainweb:latest
+            
+
+      - name: Deploy to EliteMini
+        run: |
+          curl https://deploy.xingyi.dev/hooks/profile-mainweb

@@ -43,4 +43,4 @@ jobs:
 
       - name: Deploy to EliteMini
         run: |
-          curl https://deploy.xingyi.dev/hooks/profile-mainweb
+          curl -f -v https://deploy.xingyi.dev/hooks/profile-mainweb

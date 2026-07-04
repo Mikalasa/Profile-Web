@@ -41,6 +41,13 @@ jobs:
           tags: ghcr.io/mikalasa/profile-mainweb:latest
 
 
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
       - name: Deploy to EliteMini
         run: |
-          curl -f -v https://deploy.xingyi.dev/hooks/profile-mainweb
+          curl -f -v http://elitemini-870:9000/hooks/profile-mainweb

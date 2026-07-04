@@ -1,6 +1,5 @@
 name: Build mainWeb Docker Image
 
-
 on:
   push:
     branches:
@@ -8,22 +7,20 @@ on:
     paths:
       - 'mainWeb/**'
 
-
 permissions:
   contents: read
   packages: write
 
 
 jobs:
-
   docker:
 
     runs-on: ubuntu-latest
 
-
     steps:
 
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
 
       - name: Login GHCR
@@ -34,19 +31,15 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
 
-      - name: Build and push
-
-        uses: docker/build-push-action@v5
-
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
         with:
-
           context: ./mainWeb
-
+          file: ./mainWeb/Dockerfile
           push: true
+          no-cache: true
+          tags: ghcr.io/mikalasa/profile-mainweb:latest
 
-          tags: |
-            ghcr.io/mikalasa/profile-mainweb:latest
-            
 
       - name: Deploy to EliteMini
         run: |

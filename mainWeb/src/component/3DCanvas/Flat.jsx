@@ -150,7 +150,7 @@ function Flat() {
                         title={"iframe-flat"}
                         className={`flat-iframe-content ${useTabletMockup ? "webgl-iframe-tablet" : ""}`}
                         loading="lazy"
-                        src="https://mikalasa.github.io/Profile-Web/"
+                        src="https://mikalasa.github.io/profile-web/"
                     />
                     <AnimatePresence>
                         {showSwipeHint && (
